@@ -1,12 +1,7 @@
 // This game shell was happily modified from Googler Seth Ladd's "Bad Aliens" game and his Google IO talk in 2011
 
 class GameEngine {
-    constructor(options) {
-        // What you will use to draw
-        // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-        this.ctx = null;
-
-        // Everything that will be updated and drawn each frame
+    constructor() {
         this.entities = [];
         this.ctx = null;
         this.surfaceWidth = null;
@@ -23,34 +18,25 @@ class GameEngine {
         this.mouse = null;
         this.wheel = null;
         this.keys = {};
-
-        this.camera = {
-            x: 0,
-            y: 0,
-            // Add any other properties or methods needed for your camera
-        };
-
-        // Options and the Details
-        this.options = options || {
-            debugging: false,
-        };
     };
 
     init(ctx) {
         this.ctx = ctx;
+        this.surfaceWidth = this.ctx.canvas.width;
+        this.surfaceHeight = this.ctx.canvas.height;
         this.startInput();
         this.timer = new Timer();
     };
 
     start() {
-        this.running = true;
+        var that = this;
         const gameLoop = () => {
             this.loop();
             requestAnimFrame(gameLoop, this.ctx.canvas);
-        };
+        }
         gameLoop();
     };
-
+    
     startInput() {
         var that = this;
         this.ctx.canvas.addEventListener("keydown", function(e) {
@@ -125,7 +111,7 @@ class GameEngine {
     draw() {
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-
+        this.ctx.save();
         // Draw latest things first
         for (let i = this.entities.length - 1; i >= 0; i--) {
             this.entities[i].draw(this.ctx, this);

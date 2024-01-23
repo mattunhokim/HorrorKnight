@@ -1,6 +1,3 @@
-/** Global Parameters Object */
-const params = { };
-
 /**
  * @param {Number} n
  * @returns Random Integer Between 0 and n-1
@@ -56,4 +53,11 @@ window.requestAnimFrame = (() => {
  */
 const getDistance = (p1, p2) => {
     return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+};
+
+/** Global Parameters Object */
+const PARAMS = {
+    DEBUG: true,
+    SCALE: 3,
+    BITWIDTH: 16
 };
