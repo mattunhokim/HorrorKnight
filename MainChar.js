@@ -14,44 +14,31 @@ class MainChar {
 		this.dead = false;
 		this.x = 0;
 		this.y = 0;
+		this.height =  768;
+		this.width = 1024;
 	
 		this.velocity = {x:0, y:0};
 		this.fallAcc = 562.5;
-		//	this.speed = 200;
+		this.speed = 200;
 		this.updateBB;
 
-		this.animations = [];
+		this.animator = new Animator(this.spritesheet, 0, 0, 80, 90, 9, .2, 14, false, true);
 		this.loadAnimations();
+	
 	};
 
 	loadAnimations() {
-		for (var i = 0; i < 6; i++){
-			this.animations.push([]);
-			for(var j = 0; j < 3; j++){
-				this.animations[i].push([]);
-				for(var k = 0; k < 2; k++){
-					this.animations[i][j].push([]);
-				}
-			}
-		}
-
 		// [state][size][direction] 
 		// state = standing = 0 walking, running, jumping, etc. 
 		// size = version 
 		// direction 0 = right
-
 		//this.animations[state][size][direction] = 
 		//	new Animator(this.spritesheet, postionx, positiony, 
 		//      height, width, # of frames, frame duration, frane padding, reverse(boolean), loop(boolean));
 		
-		
 		//testing walking right
-		this.animations[1][0][0] = new Animator(this.spritesheet, 0, 0, 80, 90, 9, .2, 14, false, true);
-		
 		//death animation
-		// this.deadAnim = new Animator()
-
-	
+		// this.deadAnim = new Animator();
 	};
 
 	updateBB(){
@@ -60,7 +47,6 @@ class MainChar {
 	
 	updateBB(){
 		this.lastBB = this.BB;
-
 	};
 
 	die(){
@@ -68,28 +54,14 @@ class MainChar {
 	}
 	
 	update() { // must fix
+		this.x -= this.speed;
 	};
-
-
-
-
-
-
-
-
 
 	draw(ctx)	 {
- 	if(this.dead)	 { 
- 		this.deadAnim.drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE); 
- 	} 
- 	else	 { 
- 		this.animations[this.state][this.size][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE	); 
-	} 
- 	if (PARAMS.DEBUG)	 { 
- 		ctx.strokeStyle = 'Red	'; 
- 		ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y, this.BB.width, this.BB.height	); 
- 		}
-	};
+		this.animator.drawFrame(this.game.clockTick, ctx, 0, 0, 2);
+
+//		ctx.drawImage(this.spritesheet, 0, 0, 600, 90);
+	}
 }
 
 
