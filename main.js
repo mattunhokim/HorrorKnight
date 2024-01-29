@@ -1,6 +1,7 @@
 const ASSET_MANAGER = new AssetManager();
 
 ASSET_MANAGER.queueDownload("./movement1.png"); // copy for each entity full sprite sheet
+ASSET_MANAGER.queueDownload("./knight.webp"); // copy for each entity full sprite sheet
 ASSET_MANAGER.queueDownload("./maps/map1.png"); 
 
 ASSET_MANAGER.downloadAll(() => {

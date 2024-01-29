@@ -6,12 +6,15 @@ class MainChar {
 		// Sprite Sheet
 		this.spritesheet = ASSET_MANAGER.getAsset("./movement1.png");
 		this.idle = ASSET_MANAGER.getAsset("./movement1.png");
+    //    this.spritesheet = ASSET_MANAGER.getAsset("./knight.webp");
+	//	this.idle = ASSET_MANAGER.getAsset("./knight.webp");
 		//, 0, 0, 80, 90, 9, .2);
 		
 		// Main Char State
-		this.size = 0;
-		this.facing = 0;
-		this.state = 0;
+			//this.size = 0; // this will most likely be removed
+		this.facing = 0; // 0 = right, 1 = left
+		this.state = 0; // 0 = idle, 1 = walking, 2 = running, 3 = jumping, 4 = falling, 5 = attacking, 6 = healing
+		this.state = 0; // 0 = idle, 1 = walking, 2 = jumping, 3 = falling, 4 = attacking, 5 = healing
 		this.dead = false;
 		this.x = 0;
 		this.y = 0;
@@ -28,7 +31,56 @@ class MainChar {
 	
 	};
 	// Matrix to store animations
-	loadAnimations() {
+	loadAnimations() { // not implemented yet
+        		// [state][facing]
+		// state = standing = 0 walking, 1 running, 2 jumping, etc.
+		// size = version
+		// direction 0 = right
+		//this.animations[this.state][this.facing] = new Animator(this.spritesheet, this.x, this.y, this.height, this.width, 9, .2, 14, this.reverse, this.loop);
+
+		// for loop goes here
+		//for(var i = 0; i < 6; i++){ // five states
+       //     this.animator.push([i]);
+        //    for(var j = 0; j < 2; j++){ // two directions
+     //           this.animator[i].push([j]);
+   //         }
+ //      }
+
+		//testing walking right
+
+		//testing being idle
+//		this.animator[0][0] = new Animator(this.spritesheet, 1024, 639, 80, 90, 9, .2, 14, false, true);
+	//	this.animator[0][1] = new Animator(this.spritesheet, 1024, 639, 80, 90, 9, .2, 14, true, true);
+
+		//test moving to the right
+	//	this.animator[1][0] = new Animator(this.spritesheet, 1024, 0, 80, 90, 9, .2, 14, false, true);
+
+		//test moving to the left
+	//	this.animator[1][1] = new Animator(this.spritesheet, 1024, 0, 80, 90, 9, .2, 14, true, true);
+
+		//test jumping
+	//	this.animator[2][0] = new Animator(this.spritesheet, 1024, 721, 80, 90, 9, .2, 14, false, true);
+	//	this.animator[2][1] = new Animator(this.spritesheet, 1024, 721, 80, 90, 9, .2, 14, true, true);
+
+		//test falling
+	//	this.animator[3][0] = new Animator(this.spritesheet, 1744, 721, 80, 90, 9, .2, 14, false, true);
+	//	this.animator[3][1] = new Animator(this.spritesheet, 304, 721, 80, 90, 9, .2, 14, true, true);
+
+		//test attacking
+	//	this.animator[4][0] = new Animator(this.spritesheet, 1024, 320, 80, 90, 9, .2, 14, false, true);
+	//	this.animator[4][1] = new Animator(this.spritesheet, 1024, 320, 80, 90, 9, .2, 14, true, true);
+
+		//test healing
+    //this.animator[5][0] = new Animator(this.spritesheet, 1264, 240, 80, 90, 9, .2, 14, false, true);
+	//	this.animator[5][1] = new Animator(this.spritesheet, 784, 240, 80, 90, 9, .2, 14, true, true);
+
+		
+		//death animation
+	//	this.deadAnim = new Animator(this.spritesheet, 1583, 640, 80, 90, 9, .2, 14, false, true);
+	};
+
+	updateBB(){
+		this.BB = new BoundingBox(this.x, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
 	};
 	
 	updateBB(){
@@ -40,77 +92,55 @@ class MainChar {
 	}
 	
 	update() { // must fix
-		const TICK = this.game.clockTick;       
-        const MIN_WALK = 4.453125;
-        const MAX_WALK = 93.75;
-        const MAX_RUN = 153.75;
-        const ACC_WALK = 133.59375;
-        const ACC_RUN = 200.390625;
-        const DEC_REL = 182.8125;
-        const DEC_SKID = 365.625;
-        const MIN_SKID = 33.75;
+	
+		const TICK = this.game.clockTick;
 
-        const STOP_FALL = 1575;
-        const WALK_FALL = 1800;
-        const RUN_FALL = 2025;
-        const STOP_FALL_A = 450;
-        const WALK_FALL_A = 421.875;
-        const RUN_FALL_A = 562.5;
+		const MIN_WALK = 0.2;
+		const MAX_IDLE = 1583;
+		const MIN_IDLE = 1024;
 
-        const MAX_FALL = 270;
 
-          // update velocity
-            
-            if (this.state !== 4) { // not jumping
-                    // ground physics
-                    if (Math.abs(this.velocity.x) < MIN_WALK) {  // slower than a walk // starting, stopping or turning around
-                        this.velocity.x = 0;
-                        this.state = 0;
-                        if (this.game.left && !this.game.down) {
-                            this.velocity.x -= MIN_WALK;
-                        }
-                        if (this.game.right && !this.game.down) {
-                            this.velocity.x += MIN_WALK;
-                        }
-                  
-                    // horizontal physics
-                    if (this.game.right && !this.game.left) {
-                        if (Math.abs(this.velocity.x) > MAX_WALK) {
-                            this.velocity.x += ACC_RUN * TICK;
-                        } else this.velocity.x += ACC_WALK * TICK;
-                    } else if (this.game.left && !this.game.right) {
-                        if (Math.abs(this.velocity.x) > MAX_WALK) {
-                            this.velocity.x -= ACC_RUN * TICK;
-                        } else this.velocity.x -= ACC_WALK * TICK;
-                    } else {
-                        // do nothing
-                    }
+		if (this.state === 0) {
+			// idle
+			this.x += this.speed + this.game.clockTick;
+			if (this.x >= MAX_IDLE) this.x = MIN_IDLE;
 
-            // update state
-            if (this.state !== 4 && this.state !== 6) {
-                if (this.game.down) this.state = 5;
-                else if (Math.abs(this.velocity.x) > MAX_WALK) this.state = 2;
-                else if (Math.abs(this.velocity.x) >= MIN_WALK) this.state = 1;
-                else this.state = 0;
-            } else {
+		} else if (this.state === 1) {
+			// walking
+			if (this.velocity.x <= MIN_WALK) {
+				this.velocity.x += TICK;
+			}
+		} else if (this.state === 2) {
 
-            }
+			// jumping
+			this.velocity.y -= TICK * this.fallAcc;
+		} else if (this.state === 3) {
+			//falling
+			this.velocity.y += TICK * this.fallAcc;
+		} else if (this.state === 4) {
+			//attacking
+
+		} else if (this.state === 5) {
+			//healing
+
 		}
-  
-	}
+    
 	};
 
 	draw(ctx)	 {
 		this.animator.drawFrame(this.game.clockTick, ctx, 0, 0, 2);
-		ctx.drawImage(this.idle,
-			0, 0,                // source coordinates (x, y) on the sprite sheet
-			80, 90,               // width and height of the source frame on the sprite sheet
-			0, 0,                 // destination coordinates (x, y) on the canvas
-			80 * 2, 90 * 2        // width and height of the destination frame on the canvas, scaled by 2
-		);
+	//	ctx.drawImage(this.idle,
+	//		0, 0,                // source coordinates (x, y) on the sprite sheet
+	//		80, 90,               // width and height of the source frame on the sprite sheet
+	//		0, 0,                 // destination coordinates (x, y) on the canvas
+	//		80 * 2, 90 * 2        // width and height of the destination frame on the canvas, scaled by 2
+	//	);
 
 		
 }
+
+
+///
 
 }
 
