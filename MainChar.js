@@ -48,14 +48,14 @@ class MainChar {
 		//testing walking right
 
 		//testing being idle
-		this.animator[0][0] = new Animator(this.spritesheet, 1024, 639, 80, 90, 9, .2, 14, false, true);
+		this.animator[0][0] = new Animator(this.spritesheet, 1024, 639, 80, 90, 9, 1, 14, false, true);
 	//	this.animator[0][1] = new Animator(this.spritesheet, 1024, 639, 80, 90, 9, .2, 14, true, true);
 
 		//test moving to the right
 		this.animator[1][0] = new Animator(this.spritesheet, 1024, 0, 80, 90, 9, .2, 14, false, true);
 
 		//test moving to the left
-	//	this.animator[1][1] = new Animator(this.spritesheet, 1024, 0, 80, 90, 9, .2, 14, true, true);
+		this.animator[1][1] = new Animator(this.spritesheet, 1024, 0, 80, 90, 9, .2, 14, true, true);
 
 		//test jumping
 	//    this.animator[2][0] = new Animator(this.spritesheet, 1024, 721, 80, 90, 9, .2, 14, false, true);
@@ -90,14 +90,18 @@ class MainChar {
 		this.dead = true;
 	}
 	
-	update() {
+	update() { // must fix
+	this.velocity.x = 50;
 
-
-    }
+     this.x += this.velocity.x * this.game.clockTick;
+ 	 this.y += this.velocity.x * this.game.clockTick;
+	 
     
+	};
 
 	draw(ctx)	 {
-		this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, 0, 0, 2);
+		//this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x,this.y, PARAMS.SCALE);
+		this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x,this.y, 1);
 		ctx.drawImage(this.idle,
 			1024, 0,                // source coordinates (x, y) on the sprite sheet
 			80, 90,               // width and height of the source frame on the sprite sheet
