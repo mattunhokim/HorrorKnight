@@ -4,17 +4,16 @@ class MainChar {
 		this.game.MainChar = this;
 
 		// Sprite Sheet
-		this.spritesheet = ASSET_MANAGER.getAsset("./movement1.png");
-		this.idle = ASSET_MANAGER.getAsset("./movement1.png");
-    //    this.spritesheet = ASSET_MANAGER.getAsset("./knight.webp");
-	//	this.idle = ASSET_MANAGER.getAsset("./knight.webp");
+	//	this.spritesheet = ASSET_MANAGER.getAsset("./movement1.png");
+	//	this.idle = ASSET_MANAGER.getAsset("./movement1.png");
+       this.spritesheet = ASSET_MANAGER.getAsset("./knight.webp");
+       this.idle = ASSET_MANAGER.getAsset("./knight.webp");
 		//, 0, 0, 80, 90, 9, .2);
 		
 		// Main Char State
 			//this.size = 0; // this will most likely be removed
 		this.facing = 0; // 0 = right, 1 = left
 		this.state = 0; // 0 = idle, 1 = walking, 2 = running, 3 = jumping, 4 = falling, 5 = attacking, 6 = healing
-		this.state = 0; // 0 = idle, 1 = walking, 2 = jumping, 3 = falling, 4 = attacking, 5 = healing
 		this.dead = false;
 		this.x = 0;
 		this.y = 0;
@@ -26,7 +25,7 @@ class MainChar {
 		this.speed = 200;
 		this.updateBB;
 
-		this.animator = new Animator(this.spritesheet, 0, 0, 80, 90, 9, .2, 14, false, true);
+		this.animator = [];
 		this.loadAnimations();
 	
 	};
@@ -36,30 +35,30 @@ class MainChar {
 		// state = standing = 0 walking, 1 running, 2 jumping, etc.
 		// size = version
 		// direction 0 = right
-		//this.animations[this.state][this.facing] = new Animator(this.spritesheet, this.x, this.y, this.height, this.width, 9, .2, 14, this.reverse, this.loop);
+		// this.animator[this.state][this.facing] = new Animator(this.spritesheet, this.x, this.y, this.height, this.width, 9, .2, 14, this.reverse, this.loop);
 
 		// for loop goes here
-		//for(var i = 0; i < 6; i++){ // five states
-       //     this.animator.push([i]);
-        //    for(var j = 0; j < 2; j++){ // two directions
-     //           this.animator[i].push([j]);
-   //         }
- //      }
+		for(var i = 0; i < 6; i++){ // five states
+            this.animator.push([i]);
+           for(var j = 0; j < 2; j++){ // two directions
+             this.animator[i].push([j]);
+           }
+       }
 
 		//testing walking right
 
 		//testing being idle
-//		this.animator[0][0] = new Animator(this.spritesheet, 1024, 639, 80, 90, 9, .2, 14, false, true);
+		this.animator[0][0] = new Animator(this.spritesheet, 1024, 639, 80, 90, 9, .2, 14, false, true);
 	//	this.animator[0][1] = new Animator(this.spritesheet, 1024, 639, 80, 90, 9, .2, 14, true, true);
 
 		//test moving to the right
-	//	this.animator[1][0] = new Animator(this.spritesheet, 1024, 0, 80, 90, 9, .2, 14, false, true);
+		this.animator[1][0] = new Animator(this.spritesheet, 1024, 0, 80, 90, 9, .2, 14, false, true);
 
 		//test moving to the left
 	//	this.animator[1][1] = new Animator(this.spritesheet, 1024, 0, 80, 90, 9, .2, 14, true, true);
 
 		//test jumping
-	//	this.animator[2][0] = new Animator(this.spritesheet, 1024, 721, 80, 90, 9, .2, 14, false, true);
+	//    this.animator[2][0] = new Animator(this.spritesheet, 1024, 721, 80, 90, 9, .2, 14, false, true);
 	//	this.animator[2][1] = new Animator(this.spritesheet, 1024, 721, 80, 90, 9, .2, 14, true, true);
 
 		//test falling
@@ -71,12 +70,12 @@ class MainChar {
 	//	this.animator[4][1] = new Animator(this.spritesheet, 1024, 320, 80, 90, 9, .2, 14, true, true);
 
 		//test healing
-    //this.animator[5][0] = new Animator(this.spritesheet, 1264, 240, 80, 90, 9, .2, 14, false, true);
+    //    this.animator[5][0] = new Animator(this.spritesheet, 1264, 240, 80, 90, 9, .2, 14, false, true);
 	//	this.animator[5][1] = new Animator(this.spritesheet, 784, 240, 80, 90, 9, .2, 14, true, true);
 
 		
 		//death animation
-	//	this.deadAnim = new Animator(this.spritesheet, 1583, 640, 80, 90, 9, .2, 14, false, true);
+		this.deadAnim = new Animator(this.spritesheet, 1583, 640, 80, 90, 9, .2, 14, false, true);
 	};
 
 	updateBB(){
@@ -91,50 +90,20 @@ class MainChar {
 		this.dead = true;
 	}
 	
-	update() { // must fix
-	
-		const TICK = this.game.clockTick;
-
-		const MIN_WALK = 0.2;
-		const MAX_IDLE = 1583;
-		const MIN_IDLE = 1024;
+	update() {
 
 
-		if (this.state === 0) {
-			// idle
-			this.x += this.speed + this.game.clockTick;
-			if (this.x >= MAX_IDLE) this.x = MIN_IDLE;
-
-		} else if (this.state === 1) {
-			// walking
-			if (this.velocity.x <= MIN_WALK) {
-				this.velocity.x += TICK;
-			}
-		} else if (this.state === 2) {
-
-			// jumping
-			this.velocity.y -= TICK * this.fallAcc;
-		} else if (this.state === 3) {
-			//falling
-			this.velocity.y += TICK * this.fallAcc;
-		} else if (this.state === 4) {
-			//attacking
-
-		} else if (this.state === 5) {
-			//healing
-
-		}
+    }
     
-	};
 
 	draw(ctx)	 {
-		this.animator.drawFrame(this.game.clockTick, ctx, 0, 0, 2);
-	//	ctx.drawImage(this.idle,
-	//		0, 0,                // source coordinates (x, y) on the sprite sheet
-	//		80, 90,               // width and height of the source frame on the sprite sheet
-	//		0, 0,                 // destination coordinates (x, y) on the canvas
-	//		80 * 2, 90 * 2        // width and height of the destination frame on the canvas, scaled by 2
-	//	);
+		this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, 0, 0, 2);
+		ctx.drawImage(this.idle,
+			1024, 0,                // source coordinates (x, y) on the sprite sheet
+			80, 90,               // width and height of the source frame on the sprite sheet
+			0, 0,                 // destination coordinates (x, y) on the canvas
+			80 * 2, 90 * 2        // width and height of the destination frame on the canvas, scaled by 2
+		);
 
 		
 }

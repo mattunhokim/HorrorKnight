@@ -27,6 +27,7 @@ class SceneManager {
     };
 
     update() {
+
         // Update MainChar and other entities
         this.MainChar.update();
 
@@ -42,6 +43,7 @@ class SceneManager {
         this.startMap.y = this.y; // Update background's y position
 
         // Additional logic based on your game requirements
+
     }
 
     draw(ctx) {
