@@ -84,6 +84,8 @@ class MainChar {
 	
 	updateBB(){
 		this.lastBB = this.BB;
+
+		this.BB = new BoundingBox(this.x, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2);
 	};
 
 	die(){
@@ -94,20 +96,23 @@ class MainChar {
 	this.velocity.x = 50;
 
      this.x += this.velocity.x * this.game.clockTick;
- 	 this.y += this.velocity.x * this.game.clockTick;
-	 
+	 this.y += this.velocity.x * this.game.clockTick;
+
+		//collision detection
+		//var that = this;
+		//this.game.entities.forEach()
     
 	};
 
 	draw(ctx)	 {
 		//this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x,this.y, PARAMS.SCALE);
 		this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x,this.y, 1);
-		ctx.drawImage(this.idle,
-			1024, 0,                // source coordinates (x, y) on the sprite sheet
-			80, 90,               // width and height of the source frame on the sprite sheet
-			0, 0,                 // destination coordinates (x, y) on the canvas
-			80 * 2, 90 * 2        // width and height of the destination frame on the canvas, scaled by 2
-		);
+		//ctx.drawImage(this.idle,
+		//	1024, 0,                // source coordinates (x, y) on the sprite sheet
+		//	80, 90,               // width and height of the source frame on the sprite sheet
+		//	0, 0,                 // destination coordinates (x, y) on the canvas
+		//	80 * 2, 90 * 2        // width and height of the destination frame on the canvas, scaled by 2
+		//);
 
 		
 }

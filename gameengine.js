@@ -113,7 +113,9 @@ class GameEngine {
                     that.A = false;
                     break;
             }
-        },false);
+        }, false);
+
+
     };
     addEntity(entity) {
         this.entities.push(entity);
