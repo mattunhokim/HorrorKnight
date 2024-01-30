@@ -84,6 +84,8 @@ class MainChar {
 	
 	updateBB(){
 		this.lastBB = this.BB;
+
+		this.BB = new BoundingBox(this.x, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH * 2);
 	};
 
 	die(){
@@ -92,11 +94,21 @@ class MainChar {
 	
 	update() { // must fix
 	this.velocity.x = 50;
-	this.velocity.y = 10;
+	this.velocity.y = 0;
 
  	 this.y += this.velocity.y * this.game.clockTick;
 	  if(this.game.right){
         this.x += this.velocity.x * this.game.clockTick;
+	  }
+	  if(this.game.down){
+		this.velocity.y = 50;
+        this.y += this.velocity.x * this.game.clockTick;
+	  }
+	  if(this.game.left){
+        this.x -= this.velocity.x * this.game.clockTick;
+	  }
+	  if(this.game.up){
+        this.y -= this.velocity.x * this.game.clockTick;
 	  }
     
 	};
