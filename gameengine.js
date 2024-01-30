@@ -48,72 +48,72 @@ class GameEngine {
             return { x: x, y: y, radius: 0 };
         }
 
-        this.ctx.canvas.addEventListener("keydown", function(e) {
+        this.ctx.canvas.addEventListener("keydown", function (e) {
             console.log(e);
             that.keyboardActive = true;
-            switch(e) {
-                case "ArrowLeft": 
+            switch (e.key) {
+                case "ArrowLeft":
                 case "KeyA":
-                        that.left = true;
-                        break;
-
+                    that.left = true;
+                    break;
+        
                 case "ArrowRight":
                 case "KeyD":
                     that.right = true;
                     break;
-
-                case "ArrowUp": 
+        
+                case "ArrowUp":
                 case "KeyW":
-                        that.up = true;
-                        break;
-
+                    that.up = true;
+                    break;
+        
                 case "ArrowDown":
                 case "KeyS":
                     that.down = true;
                     break;
-
+        
                 case "KeyZ":
-                        that.B = true;
-                        break;
-
+                    that.B = true;
+                    break;
+        
                 case "KeyX":
                     that.A = true;
                     break;
             }
         }, false);
-
-        this.ctx.canvas.addEventListener("keyup", function(e) {
+        
+        this.ctx.canvas.addEventListener("keyup", function (e) {
             that.keyboardActive = false;
-            switch(e) {
-                case "ArrowLeft": 
+            switch (e.key) {
+                case "ArrowLeft":
                 case "KeyA":
-                        that.left = false;
-                        break;
-
+                    that.left = false;
+                    break;
+        
                 case "ArrowRight":
                 case "KeyD":
                     that.right = false;
                     break;
-
-                case "ArrowUp": 
+        
+                case "ArrowUp":
                 case "KeyW":
-                        that.up = false;
-                        break;
-
+                    that.up = false;
+                    break;
+        
                 case "ArrowDown":
                 case "KeyS":
                     that.down = false;
                     break;
-
+        
                 case "KeyZ":
-                        that.B = false;
-                        break;
-
+                    that.B = false;
+                    break;
+        
                 case "KeyX":
                     that.A = false;
                     break;
             }
-        },false);
+        }, false);
     };
     addEntity(entity) {
         this.entities.push(entity);
@@ -127,6 +127,7 @@ class GameEngine {
         for (let i = this.entities.length - 1; i >= 0; i--) {
             this.entities[i].draw(this.ctx, this);
         }
+        
    
     };
 

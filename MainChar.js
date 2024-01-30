@@ -92,10 +92,12 @@ class MainChar {
 	
 	update() { // must fix
 	this.velocity.x = 50;
+	this.velocity.y = 10;
 
-     this.x += this.velocity.x * this.game.clockTick;
- 	 this.y += this.velocity.x * this.game.clockTick;
-	 
+ 	 this.y += this.velocity.y * this.game.clockTick;
+	  if(this.game.right){
+        this.x += this.velocity.x * this.game.clockTick;
+	  }
     
 	};
 
@@ -105,8 +107,8 @@ class MainChar {
 		ctx.drawImage(this.idle,
 			1024, 0,                // source coordinates (x, y) on the sprite sheet
 			80, 90,               // width and height of the source frame on the sprite sheet
-			0, 0,                 // destination coordinates (x, y) on the canvas
-			80 * 2, 90 * 2        // width and height of the destination frame on the canvas, scaled by 2
+			this.x, this.y,                 // destination coordinates (x, y) on the canvas
+			80 , 90        // width and height of the destination frame on the canvas, scaled by 2
 		);
 
 		

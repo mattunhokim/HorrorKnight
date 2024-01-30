@@ -17,7 +17,6 @@ class SceneManager {
         this.game.addEntity(this.MainChar);
         this.game.addEntity(this.startMap);
 
-
     }
 
     clearEntities() {
@@ -48,10 +47,8 @@ class SceneManager {
 
     draw(ctx) {
         // Draw entities, background, and other visuals
- 
         this.MainChar.draw(ctx);
         this.startMap.draw(ctx);
-
-        // Additional drawing logic based on your game requirements
     }
+
 }
