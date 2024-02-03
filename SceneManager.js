@@ -4,6 +4,7 @@ class SceneManager {
         this.game.camera = this;
         this.x = 0;
         this.y = 0;
+        this.w = 60;
         this.score = 0;
         this.coin = 0;
         this.lives = 3;
@@ -11,11 +12,13 @@ class SceneManager {
         this.title = true;
         this.credits = false;
         this.level = null;
+        this.ground = new ground(this.game, this.x, this.y, this.w);
         this.MainChar = new MainChar(this.game, this.x, this.y); // Create an instance of MainChar
        // this.loadLevel(2.5 * PARAMS.BLOCKWIDTH, 13 * PARAMS.BLOCKWIDTH, false, true);
         this.startMap = new Background(this.game, 0, 0);
         this.game.addEntity(this.MainChar);
         this.game.addEntity(this.startMap);
+        this.game.addEntity(this.ground);
 
     }
 
@@ -52,3 +55,22 @@ class SceneManager {
     }
 
 }
+
+
+class MiniMap {
+    constructor(game, x, y) {
+        Object.assign(this, { game, x, y });
+    }
+
+    update() {
+        // Update logic related to the minimap
+    }
+
+    draw(ctx) {
+        ctx.strokeStyle = "Black";
+        ctx.strokeRect(this.x, this.y, this.w, PARAMS.BLOCKWWIDTH);
+        for(var i = 0; i < this.game.entities.length; i++) {
+            this.game.entities[i].drawMinimap(ctx, this.x, this.y);
+        }
+    };
+};
