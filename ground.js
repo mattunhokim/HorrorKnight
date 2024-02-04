@@ -2,6 +2,11 @@ class ground {
     constructor(game, x, y, w) {
         Object.assign(this, { game, x, y, w });
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/floor1.png");
+        this.zoomLevel = 1.5;
+        this.x = 0;
+        this.y = 0;
+        this.height = 95;
+        this.width = 845;
 
         this.BB = new BoundingBox(this.x, this.y, this.w, PARAMS.BLOCKWIDTH);
         this.leftBB = new BoundingBox(this.x, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
@@ -19,7 +24,19 @@ class ground {
     }
 
     draw(ctx) {
-       ctx.drawImage(this.spritesheet, 60, 60, 140, 32, this.x - this.game.camera.x, this.y - this.game.camera.y, this.w, 32);
+        const sourceX = 0;
+        const sourceY = 0;
+        const sourceWidth = this.spritesheet.width;
+       const sourceHeight = this.spritesheet.height;
+
+       const destinationX = this.x - this.game.camera.x;
+        const destinationY = this.y - this.game.camera.y; // Adjusted for camera's y position
+        const destinationWidth = this.spritesheet.width * this.zoomLevel;
+         const destinationHeight = this.spritesheet.height * this.zoomLevel;
+
+        ctx.drawImage(this.spritesheet, sourceX, sourceY, sourceWidth, sourceHeight,
+            destinationX,destinationY, destinationWidth, destinationHeight);
+
         if (PARAMS.DEBUG) {
             ctx.strokeStyle = "Red";
             ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);

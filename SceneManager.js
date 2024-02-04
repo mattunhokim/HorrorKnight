@@ -17,8 +17,9 @@ class SceneManager {
        // this.loadLevel(2.5 * PARAMS.BLOCKWIDTH, 13 * PARAMS.BLOCKWIDTH, false, true);
         this.startMap = new Background(this.game, 0, 0);
         this.game.addEntity(this.MainChar);
-        this.game.addEntity(this.startMap);
         this.game.addEntity(this.ground);
+        this.game.addEntity(this.startMap);
+
 
     }
 
@@ -45,14 +46,17 @@ class SceneManager {
         this.startMap.y = this.y; // Update background's y position
 
         // Additional logic based on your game requirements
-
+        this.ground.x = this.x+100;
+        this.ground.y = this.y+100;
+        
     }
 
     draw(ctx) {
         // Draw entities, background, and other visuals
         this.MainChar.draw(ctx);
         this.startMap.draw(ctx);
-    }
+        this.ground.draw(ctx);
+        }   
 
 }
 
