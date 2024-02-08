@@ -53,30 +53,30 @@ class GameEngine {
             that.keyboardActive = true;
             switch (e.key) {
                 case "ArrowLeft":
-                case "KeyA":
+                case "a":
                     that.left = true;
                     break;
         
                 case "ArrowRight":
-                case "KeyD":
+                case "d":
                     that.right = true;
                     break;
         
                 case "ArrowUp":
-                case "KeyW":
+                case "w":
                     that.up = true;
                     break;
         
                 case "ArrowDown":
-                case "KeyS":
+                case "s":
                     that.down = true;
                     break;
         
-                case "KeyZ":
+                case "z":
                     that.B = true;
                     break;
         
-                case "KeyX":
+                case "x":
                     that.A = true;
                     break;
             }
@@ -86,30 +86,30 @@ class GameEngine {
             that.keyboardActive = false;
             switch (e.key) {
                 case "ArrowLeft":
-                case "KeyA":
+                case "a":
                     that.left = false;
                     break;
         
                 case "ArrowRight":
-                case "KeyD":
+                case "d":
                     that.right = false;
                     break;
         
                 case "ArrowUp":
-                case "KeyW":
+                case "w":
                     that.up = false;
                     break;
         
                 case "ArrowDown":
-                case "KeyS":
+                case "s":
                     that.down = false;
                     break;
         
-                case "KeyZ":
+                case "z":
                     that.B = false;
                     break;
         
-                case "KeyX":
+                case "x":
                     that.A = false;
                     break;
             }

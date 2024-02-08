@@ -7,21 +7,19 @@ class ground {
         this.y = 0;
         this.height = 95;
         this.width = 845;
+        this.BB = new BoundingBox(this.x, this.y, this.w, PARAMS.BLOCKWIDTH * 2);
+        this.updateBB();
 
-        this.BB = new BoundingBox(this.x, this.y, this.w, PARAMS.BLOCKWIDTH);
-        this.leftBB = new BoundingBox(this.x, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
-        this.rightBB = new BoundingBox(this.x + this.w - PARAMS.BLOCKWIDTH, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
 
     }
+    updateBB() {
+        this.BB = new BoundingBox(this.x, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+    };
 
     update() {
 
     }
 
-    drawMinimap(ctx, mmX, mmY) {    
-        ctx.fillStyle = "Brown";
-        ctx.fillRect(mmX + this.x, mmY + this.y, this.w, PARAMS.BLOCKWIDTH);
-    }
 
     draw(ctx) {
         const sourceX = 0;
@@ -30,23 +28,22 @@ class ground {
        const sourceHeight = this.spritesheet.height;
 
        const destinationX = this.x - this.game.camera.x;
-        const destinationY = this.y - this.game.camera.y; // Adjusted for camera's y position
+        const destinationY = this.y - this.game.camera.y + 700; // Adjusted for camera's y position
         const destinationWidth = this.spritesheet.width * this.zoomLevel;
          const destinationHeight = this.spritesheet.height * this.zoomLevel;
 
         ctx.drawImage(this.spritesheet, sourceX, sourceY, sourceWidth, sourceHeight,
             destinationX,destinationY, destinationWidth, destinationHeight);
 
-        if (PARAMS.DEBUG) {
-            ctx.strokeStyle = "Red";
-            ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
-            ctx.strokeStyle = "Blue";
-            ctx.strokeRect(this.leftBB.x - this.game.camera.x, this.leftBB.y - this.game.camera.y, this.leftBB.width, this.leftBB.height);
-            ctx.strokeStyle = "Green";
-            ctx.strokeRect(this.rightBB.x - this.game.camera.x, this.rightBB.y - this.game.camera.y, this.rightBB.width, this.rightBB.height);
-        }
     }
 }
+
+
+
+
+
+
+
 
 class Floor {
     constructor(game, x, y, w) {

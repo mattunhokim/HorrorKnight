@@ -12,14 +12,24 @@ class SceneManager {
         this.title = true;
         this.credits = false;
         this.level = null;
+        this.loadLevel(levelOne, 2.5 * PARAMS.BLOCKWIDTH, 13 * PARAMS.BLOCKWIDTH, false);
+
         this.ground = new ground(this.game, this.x, this.y, this.w);
         this.MainChar = new MainChar(this.game, this.x, this.y); // Create an instance of MainChar
-       // this.loadLevel(2.5 * PARAMS.BLOCKWIDTH, 13 * PARAMS.BLOCKWIDTH, false, true);
+        this.loadLevel(2.5 * PARAMS.BLOCKWIDTH, 13 * PARAMS.BLOCKWIDTH, false, true);
+       
         this.startMap = new Background(this.game, 0, 0);
         this.game.addEntity(this.MainChar);
         this.game.addEntity(this.ground);
         this.game.addEntity(this.startMap);
+    }
 
+    loadLevel(level, x, y, title){
+        this.title = title;
+        this.level = level;
+        this.clearEntities();
+        this.x = 0;
+        
 
     }
 
@@ -49,6 +59,9 @@ class SceneManager {
         this.ground.x = this.x+100;
         this.ground.y = this.y+100;
         
+        if(this.startMap.x > this.MainChar.x){
+            this.MainChar.x = this.startMap.x;
+        }
     }
 
     draw(ctx) {
