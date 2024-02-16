@@ -64,7 +64,8 @@ class catfighter {
         this.animation = new Animator(this.spritesheet, 0, 0, 64, 64, 1, 0.5, 0, false, true);
         this.paused = true;
         this.dead = false;
-        this.state = 0; // 0 = idle, 1 = walking, 2 = attacking, 3 = kicking, 4 = kicking2
+        this.state = 0; // 0 = idle, 1 = walking, 2 = attacking 3 = kicking, 4 = kicking2
+        this.facing = 0; // 0 = right, 1 = left
         this.deadCounter = 0;
         this.flickerFlag = true;
         this.updateBB();
@@ -79,7 +80,21 @@ class catfighter {
             }
         }
 
-        
+        // test being idle
+        this.animator[0][0] = new Animator(this.spritesheet, 0, 0, 47, 47, 1, 0.5, 0, false, true);
+
+        // test walking
+        this.animator[1][0] = new Animator(this, 145, 0, 47, 47, 4, 0.2, 0, false, true);
+
+        // test attacking to the left
+        this.animator[2][1] = new Animator(this, 400, 151, 47, 47, 4, 0.2, 0, false, true);
+
+        // test attacking to the right
+        this.animator[2][0] = new Animator(this, 304, 151, 47, 47, 4, 0.2, 0, false, true);
+
+        // test kicking
+        this.animator[3][0] = new Animator(this, 0, 200, 47, 47, 4, 0.2, 0, false, true);
+
     }
 
     updateBB() {
