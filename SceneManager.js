@@ -21,6 +21,7 @@ class SceneManager {
        
         this.startMap = new Background(this.game, 0, 0);
         this.game.addEntity(this.MainChar);
+        this.game.addEntity(this.Dragon);
         this.game.addEntity(this.ground);
         this.game.addEntity(this.startMap);
     }
