@@ -327,7 +327,9 @@ class MainChar {
 
     draw(ctx) {
         if(!this.dead){
-        this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x, this.y, .3);
+        // this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x, this.y, .3);
+
+        this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
        // this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camerax,this.y, PARAMS.SCALE);
         }
 

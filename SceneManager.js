@@ -8,7 +8,6 @@ class SceneManager {
         this.height = 0;
         this.MainChar = new MainChar(this.game, this.x, this.y); // Create an instance of MainChar
         this.Dragon = new Dragon(this.game, this.x, this.y); // Create an instance of Dragon
-        this.loadLevel(2.5 * PARAMS.BLOCKWIDTH, 13 * PARAMS.BLOCKWIDTH, false, true);
        
        
        
