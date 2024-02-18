@@ -69,6 +69,7 @@ class SceneManager {
     draw(ctx) {
         // Draw entities, background, and other visuals
         this.MainChar.draw(ctx);
+        this.Dragon.draw(ctx);
         this.startMap.draw(ctx);
         this.ground.draw(ctx);
         }   
