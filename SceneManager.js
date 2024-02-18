@@ -7,6 +7,8 @@ class SceneManager {
         this.width = 0;
         this.height = 0;
         this.MainChar = new MainChar(this.game, this.x, this.y); // Create an instance of MainChar
+        this.Dragon = new Dragon(this.game, this.x, this.y); // Create an instance of Dragon
+        this.loadLevel(2.5 * PARAMS.BLOCKWIDTH, 13 * PARAMS.BLOCKWIDTH, false, true);
        
        
        
@@ -24,6 +26,7 @@ class SceneManager {
         this.startMap = new Background(this.game);
 
         this.game.addEntity(this.MainChar);
+        this.game.addEntity(this.Dragon);
         this.game.addEntity(this.ground);
 
 
@@ -59,6 +62,7 @@ class SceneManager {
     draw(ctx) {
         // Draw entities, background, and other visuals
         this.MainChar.draw(ctx);
+        this.Dragon.draw(ctx);
         this.startMap.draw(ctx);
         this.ground.draw(ctx);
         }

@@ -9,6 +9,8 @@ ASSET_MANAGER.queueDownload("./assets/floor3.png");
 ASSET_MANAGER.queueDownload("./assets/floor4.png");
 ASSET_MANAGER.queueDownload("./assets/wall1.png");
 ASSET_MANAGER.queueDownload("./assets/float1.png");
+ASSET_MANAGER.queueDownload("./assets/dragon.png");
+ASSET_MANAGER.queueDownload("./assets/catfighter.png");
 
 ASSET_MANAGER.downloadAll(() => {
     var gameEngine = new GameEngine();
