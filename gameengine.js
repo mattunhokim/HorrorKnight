@@ -72,13 +72,18 @@ class GameEngine {
                     that.down = true;
                     break;
         
-                case "z":
-                    that.B = true;
+                case "b":
+                    that.run = true;
                     break;
         
-                case "x":
-                    that.A = true;
+                case "n":
+                    that.jump = true;
                     break;
+                
+                case "m":
+                    that.attack = true;
+                    break;
+                    
             }
         }, false);
         
@@ -105,12 +110,16 @@ class GameEngine {
                     that.down = false;
                     break;
         
-                case "z":
-                    that.B = false;
+                case "b":
+                    that.run = false;
                     break;
         
-                case "x":
-                    that.A = false;
+                case "n":
+                    that.jump = false;
+                    break;
+
+                case "m":
+                    that.attack = false;
                     break;
             }
         }, false);
@@ -143,6 +152,7 @@ class GameEngine {
                 entity.update();
             }
         }
+
         this.camera.update();
         for (let i = this.entities.length - 1; i >= 0; --i) {
             if (this.entities[i].removeFromWorld) {

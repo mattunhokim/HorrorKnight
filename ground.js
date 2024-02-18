@@ -1,46 +1,38 @@
 class ground {
-    constructor(game, x, y, w) {
-        Object.assign(this, { game, x, y, w });
-        this.spritesheet = ASSET_MANAGER.getAsset("./assets/floor1.png");
-        this.zoomLevel = 1.5;
-        this.x = 0;
-        this.y = 0;
-        this.height = 95;
-        this.width = 845;
-        this.BB = new BoundingBox(this.x, this.y, this.w, PARAMS.BLOCKWIDTH * 2);
-        this.updateBB();
-
-
-    }
-    updateBB() {
-        this.BB = new BoundingBox(this.x, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+    constructor(game, x, y, width, height) {
+        Object.assign(this, {game, x, y, width, height}); 
+        this.BB = new BoundingBox(this.x, this.y, this.width, this.height); 
     };
+    
+//bottom: 187
+//height: 97
+//left: 0
+//right: 845
+//top: 90
+//width: 845
+//x: 0
+//y: 90
+//
+//
+//bottom: 767.6603749999812
+//height: 48
+//left: 0
+//right: 48
+//top: 719.6603749999812
+//width: 48
+//x: 0
+//y: 719.6603749999812
 
     update() {
-
     }
 
 
     draw(ctx) {
-        const sourceX = 0;
-        const sourceY = 0;
-        const sourceWidth = this.spritesheet.width;
-       const sourceHeight = this.spritesheet.height;
-
-       const destinationX = this.x - this.game.camera.x;
-        const destinationY = this.y - this.game.camera.y + 700; // Adjusted for camera's y position
-        const destinationWidth = this.spritesheet.width * this.zoomLevel;
-         const destinationHeight = this.spritesheet.height * this.zoomLevel;
-
-        ctx.drawImage(this.spritesheet, sourceX, sourceY, sourceWidth, sourceHeight,
-            destinationX,destinationY, destinationWidth, destinationHeight);
+            ctx.strokeStyle = 'Red';
+            ctx.strokeRect(this.BB.x, this.BB.y, this.BB.width, this.BB.height);
 
     }
 }
-
-
-
-
 
 
 

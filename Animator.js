@@ -1,8 +1,9 @@
 class Animator {
-	constructor(spritesheet, xStart, yStart, width, height, frameCount, frameDuration){
-		Object.assign(this, { spritesheet, xStart, yStart, width, height, frameCount, frameDuration });
+	constructor(spritesheet, xStart, yStart, width, height, frameCount, frameDuration, loop, reverse){
+		Object.assign(this, { spritesheet, xStart, yStart, width, height, frameCount, frameDuration, loop, reverse});
 		this.elapsedTime = 0;
 		this.totalTime = this.frameCount * this.frameDuration;
+		
 	};
 
 	drawFrame(tick, ctx, x, y, scale) {
@@ -19,7 +20,7 @@ class Animator {
 		if (this.reverse) {
 			frame = this.frameCount - frame - 1;
 		}
-
+		
 		ctx.drawImage(this.spritesheet,
 			this.xStart + this.width*frame, this.yStart,
 			this.width, this.height,
