@@ -8,7 +8,7 @@ class Background {
     }
 
     draw(ctx) {
-        ctx.drawImage(this.spritesheet, 0, 0, 1510, 633, 0, 0, 2250, 950);
+        ctx.drawImage(this.spritesheet, 0, 0, 1510, 633, -this.game.camera.x, -this.game.camera.y, 2250*2, 950*2);
     }
 };
 

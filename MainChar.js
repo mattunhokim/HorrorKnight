@@ -15,10 +15,8 @@ class MainChar {
         this.facing = 0; // 0 = right, 1 = left
         this.state = 0; // 0 = idle, 1 = walking, 2 = running, 3 = jumping, 4 = falling, 5 = attacking, 6 = healing
         this.dead = false;
-        this.x = 0;
-        this.y = 0;
-        this.height = 0;
-        this.width = 0;
+        this.height = 80;
+        this.width = 80;
 
         this.velocity = { x: 0, y: 0 };
         this.fallAcc = 562.5;
@@ -270,8 +268,8 @@ class MainChar {
     // update position
     this.x += this.velocity.x *  this.game.clockTick * PARAMS.SCALE;
     this.y += this.velocity.y *  this.game.clockTick * PARAMS.SCALE;
-    this.updateBB();
     this.updateLastBB();
+    this.updateBB();
 
 
 
@@ -293,11 +291,11 @@ class MainChar {
     //collision detection
     var that = this;
     this.game.entities.forEach(function (entity) {
-        if (entity.BB && that.BB.collide(entity.BB)) {
+        if (entity != that && entity.BB && that.BB.collide(entity.BB))  {
             if (that.velocity.y > 0) { // falling
                 if ((entity instanceof ground) // landing
                     && (that.lastBB.bottom) <= entity.BB.top) { // was above last tick
-                        that.y = entity.BB.top - PARAMS.BLOCKWIDTH;
+                        that.y = entity.BB.top - 80;
                         that.velocity.y = 0;
 
                     if(that.state === 3) that.state = 0; // set state to idle
@@ -329,7 +327,7 @@ class MainChar {
         if(!this.dead){
         // this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x, this.y, .3);
 
-        this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+        this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x, this.y-this.game.camera.y, 1);
        // this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camerax,this.y, PARAMS.SCALE);
         }
 
