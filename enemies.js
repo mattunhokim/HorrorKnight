@@ -54,9 +54,7 @@ class Dragon {
            // this.y += this.velocity.y;
         this.updateBB();
 
-        this.x += this.speed * this.game.clockTick;
-        if (this.x > 560) this.x = 0;
-        
+        this.x += this.speed * this.game.clockTick;        
 
         // collision detection will be implemented later
     };
