@@ -1,4 +1,4 @@
-class ground {
+class borders {
     constructor(game, x, y, width, height) {
         Object.assign(this, {game, x, y, width, height}); 
         this.BB = new BoundingBox(this.x, this.y, this.width, this.height); 

@@ -8,18 +8,11 @@ class SceneManager {
         this.height = 0;
         this.MainChar = new MainChar(this.game, 100, 0); // Create an instance of MainChar
         this.game.addEntity(this.MainChar);
+        // you gotta give values to this.x and this.y for dragon 
         this.Dragon = new Dragon(this.game, this.x, this.y); // Create an instance of Dragon   
-        this.addGround();
-
-
+        this.addBorders();
 
         //this.game.addEntity(this.Dragon);
-
-
-
-
-
-
         this.startMap = new Background(this.game);
         this.game.addEntity(this.startMap);
     }
@@ -49,23 +42,23 @@ class SceneManager {
 
     }
 
-    addGround(){
-        this.ground = new ground(this.game, 0, 810*2, 3150, 340);
-        this.game.addEntity(this.ground);
-        this.ground = new ground(this.game, 840, 0, 200, 100);
-        this.game.addEntity(this.ground);
-        this.ground = new ground(this.game, 856, 100, 200, 100);
-        this.game.addEntity(this.ground);
-        this.ground = new ground(this.game, 860, 200, 200, 330);
-        this.game.addEntity(this.ground);
-        this.ground = new ground(this.game, 950, 530, 200, 100);
-        this.game.addEntity(this.ground);
-        this.ground = new ground(this.game, 975, 630, 200, 200);
-        this.game.addEntity(this.ground);
-        this.ground = new ground(this.game, 1000, 830, 250, 200);
-        this.game.addEntity(this.ground);
-        this.ground = new ground(this.game, 1050, 1030, 250, 350);
-        this.game.addEntity(this.ground);
+    addBorders(){
+        this.borders = new borders(this.game, 0, 810*2, 3150, 340);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 840, 0, 200, 100);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 856, 100, 200, 100);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 860, 200, 200, 330);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 950, 530, 200, 100);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 975, 630, 200, 200);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1000, 830, 250, 200);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1050, 1030, 250, 350);
+        this.game.addEntity(this.borders);
     }
 
     draw(ctx) {
@@ -73,15 +66,11 @@ class SceneManager {
         this.MainChar.draw(ctx);
         this.Dragon.draw(ctx);
         this.startMap.draw(ctx);
-        this.ground.draw(ctx);
+        this.borders.draw(ctx);
         }
         
 
 }
-
-
-
-
 
 
 class MiniMap {

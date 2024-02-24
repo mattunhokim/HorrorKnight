@@ -290,7 +290,7 @@ class MainChar {
     this.game.entities.forEach(function (entity) {
         if (entity != that && entity.BB && that.BB.collide(entity.BB))  {
             if (that.velocity.y > 0) { // falling
-                if ((entity instanceof ground) // landing
+                if ((entity instanceof borders) // landing
                     && (that.lastBB.bottom) <= entity.BB.top) { // was above last tick
                         that.y = entity.BB.top - 80;
                         that.velocity.y = 0;
