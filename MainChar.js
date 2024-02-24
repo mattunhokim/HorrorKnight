@@ -117,18 +117,18 @@ class MainChar {
 
     update() { // must fix
         const TICK = this.game.clockTick;
-        const MIN_WALK = 4.453125;
-        const MAX_WALK = 13.75;
+        const MIN_WALK = 5.453125*10;
+        const MAX_WALK = 13.75*10;
 
-        const MAX_RUN = 50.75;
+        const MAX_RUN = 50.75*10;
         
-        const ACC_WALK = 50.59375;
-        const ACC_RUN = 100.390625;
+        const ACC_WALK = 50.59375*10;
+        const ACC_RUN = 100.390625*10;
         
-        const DEC_REL = 182.8125;
-        const DEC_SKID = 365.625;
+        const DEC_REL = 182.8125*10;
+        const DEC_SKID = 365.625*10;
 
-        const MIN_SKID = 33.75;
+        const MIN_SKID = 33.75*10;
         
         const STOP_FALL = 1000;
         const WALK_FALL = 1000;
@@ -138,7 +138,7 @@ class MainChar {
         const WALK_FALL_A = 1000;
         const RUN_FALL_A = 2000;
         
-        const MAX_FALL = -10;
+        const MAX_FALL = -110;
 
         const PUSH_BACK = .31;
 
@@ -210,30 +210,27 @@ class MainChar {
 
             
             ///Jumping physics
-            if (this.game.jump) { // jump
-                if (Math.abs(this.velocity.x) < 16) {
-                    this.velocity.y = -30;
+            if (this.game.jump && this.velocity.y === 0) { // Jump only when grounded
+                if (Math.abs(this.velocity.x) < 16) { // Idle jump
+                    this.velocity.y = -240;
                     this.fallAcc = STOP_FALL_A;
                 }
-                else if (Math.abs(this.velocity.x) < 40) {
-                    this.velocity.y = -40;
-                    this.fallAcc = WALK_FALL_A;
-                }
-                else {
-                    this.velocity.y = -50;
-                    this.fallAcc = RUN_FALL_A;
-                }
-                this.state = 3;
+                this.state = 3; // Set state to jumping
             }
-
-            this.velocity.y += this.fallAcc * TICK;
+            
+                 // Apply gravity
+                 this.velocity.y += this.fallAcc * TICK;
 
      
         } else{
-            if (this.velocity.y < 0 && this.game.A) { // holding A while jumping jumps higher
+            if (this.velocity.y < 0 && this.game.jump) { // holding n while jumping jumps higher
                 if (this.fallAcc === STOP_FALL) this.velocity.y -= (STOP_FALL - STOP_FALL_A) * TICK;
                 if (this.fallAcc === WALK_FALL) this.velocity.y -= (WALK_FALL - WALK_FALL_A) * TICK;
                 if (this.fallAcc === RUN_FALL) this.velocity.y -= (RUN_FALL - RUN_FALL_A) * TICK;
+
+
+
+
 
             // horizontal physics
             if (this.game.right && !this.game.left) {
