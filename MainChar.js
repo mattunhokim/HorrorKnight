@@ -160,13 +160,10 @@ class MainChar {
                   this.x = this.x + PUSH_BACK;
               }
           }
-        }
-
-                  
+        }         
         // Need to detect state and current user input
         // Ground physics
         // Jump Physics 
-        
         // Not jumping  
         if (this.state < 3){ // 0 = idle, 1 = walking, 2 = running, 3 = jumping, 4 = falling, 5 = attacking, 6 = healing
                 if (Math.abs(this.velocity.x) < MIN_WALK) {  // idle
@@ -290,14 +287,30 @@ class MainChar {
     this.game.entities.forEach(function (entity) {
         if (entity != that && entity.BB && that.BB.collide(entity.BB))  {
             if (that.velocity.y > 0) { // falling
-                if ((entity instanceof borders) // landing
-                    && (that.lastBB.bottom) <= entity.BB.top) { // was above last tick
+                if ((entity instanceof borders) && (that.lastBB.bottom <= entity.BB.top)) { // was above last tick
                         that.y = entity.BB.top - 80;
                         that.velocity.y = 0;
 
                     if(that.state === 3) that.state = 0; // set state to idle
                     that.updateBB();
                 }
+            }
+            if (that.velocity.x > 0){
+                // if character right collides with border left
+                if ((entity instanceof borders) && (that.lastBB.right <= entity.BB.left)) { 
+                    that.x = entity.BB.left - 80;
+                    that.velocity.x = 0;
+                }
+                that.updateBB();
+
+                // if character left collides with border right
+                // going left makes velocity negative 
+            if ((entity instanceof borders) && (-that.lastBB.left >= entity.BB.right)) {
+                    that.x = entity.BB.right + 80;
+                    that.velocity.x = 0;
+                }
+                that.updateBB();
+
             }
         }
     });
