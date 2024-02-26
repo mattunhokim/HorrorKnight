@@ -12,23 +12,3 @@ class borders {
 
     }
 }
-
-
-//bottom: 187
-//height: 97
-//left: 0
-//right: 845
-//top: 90
-//width: 845
-//x: 0
-//y: 90
-//
-//
-//bottom: 767.6603749999812
-//height: 48
-//left: 0
-//right: 48
-//top: 719.6603749999812
-//width: 48
-//x: 0
-//y: 719.6603749999812

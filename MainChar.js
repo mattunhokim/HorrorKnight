@@ -129,17 +129,18 @@ class MainChar {
 
         const MIN_SKID = 33.75*10;
         
-        const STOP_FALL = 1000;
-        const WALK_FALL = 1000;
-        const RUN_FALL = 1000;
+        const STOP_FALL = 1575;
+        const WALK_FALL = 1800;
+        const RUN_FALL = 2025;
         
-        const STOP_FALL_A = 500;
-        const WALK_FALL_A = 1000;
-        const RUN_FALL_A = 2000;
+        const STOP_FALL_A = 450;
+        const WALK_FALL_A = 421.875;
+        const RUN_FALL_A = 562.5;
         
         const MAX_FALL = -110;
 
         const PUSH_BACK = .31;
+
 
         this.attack = 0;
         if(this.attack > 1){
@@ -203,41 +204,50 @@ class MainChar {
                         }
                     }
                 }
-            }
-            
-            ///Jumping physics
-            if (this.game.jump) { // Jump only when grounded
-                if(this.velocity.y == 0){
-                    this.velocity.y = -240;
-                    this.state = 3; // Set state to jumping
+
+                else {
+                    // air physics
+                    // vertical physics
+                    if (this.velocity.y < 0 && this.game.A) { // holding A while jumping jumps higher
+                        if (this.fallAcc === STOP_FALL) this.velocity.y -= (STOP_FALL - STOP_FALL_A) * TICK;
+                        if (this.fallAcc === WALK_FALL) this.velocity.y -= (WALK_FALL - WALK_FALL_A) * TICK;
+                        if (this.fallAcc === RUN_FALL) this.velocity.y -= (RUN_FALL - RUN_FALL_A) * TICK;
+                    }
+                    // horizontal physics
+                    if (this.game.right && !this.game.left) {
+                        if (Math.abs(this.velocity.x) > MAX_WALK) {
+                        this.velocity.x += ACC_RUN * TICK;
+                        } 
+                        else this.velocity.x += ACC_WALK * TICK;
+                    } 
+                    else if (this.game.left && !this.game.right) {
+                        if (Math.abs(this.velocity.x) > MAX_WALK) {
+                        this.velocity.x -= ACC_RUN * TICK;
+                    } 
+                    else this.velocity.x -= ACC_WALK * TICK;
+                    } 
+                    else {
+                    // do nothing
+                    }
                 }
             }
-                // Apply gravity
-                 this.velocity.y += this.fallAcc * TICK;
+                 ///Jumping physics
+                 if (this.game.jump) { // Jump only when grounded
+                     if(this.velocity.y == 0){
+                         this.velocity.y = -240;
+                         this.state = 3; // Set state to jumping
+                     }
+                     
+                 }
+                         // Apply gravity
+      this.velocity.y -= this.fallAcc * TICK;
+      // Gravity
+      this.y -= this.velocity.y * TICK;
 
-
-         // horizontal physics
-         if (this.game.right && !this.game.left) {
-             if (Math.abs(this.velocity.x) > MAX_WALK) {
-                 this.velocity.x += ACC_RUN * TICK;
-             } else this.velocity.x += ACC_WALK * TICK;
-         } else if (this.game.left && !this.game.right) {
-             if (Math.abs(this.velocity.x) > MAX_WALK) {
-                 this.velocity.x -= ACC_RUN * TICK;
-             } else this.velocity.x -= ACC_WALK * TICK;
-         } else {
-             // do nothing
-         }
-
-    
-                
-
-    // Gravity
-    this.y += this.velocity.y * this.game.clockTick;
 
     // max speed calculation
-    if (this.velocity.y >= MAX_FALL) this.velocity.y = MAX_FALL;
-    if (this.velocity.y <= MAX_FALL) this.velocity.y = -MAX_FALL;   
+    if (this.velocity.y >= MAX_FALL) this.velocity.y = -MAX_FALL;
+    if (this.velocity.y <= MAX_FALL) this.velocity.y = MAX_FALL;   
     
     if (this.velocity.x >= MAX_RUN) this.velocity.x = MAX_RUN;
     if (this.velocity.x <= -MAX_RUN) this.velocity.x = -MAX_RUN;
@@ -245,22 +255,10 @@ class MainChar {
     if (this.velocity.x <= -MAX_WALK && !this.game.run) this.velocity.x = -MAX_WALK;
 
     // update position
-    this.x += this.velocity.x *  this.game.clockTick * PARAMS.SCALE;
-    this.y += this.velocity.y *  this.game.clockTick * PARAMS.SCALE;
+    this.x += this.velocity.x *  TICK * PARAMS.SCALE;
+    this.y += this.velocity.y *  TICK * PARAMS.SCALE;
     this.updateLastBB();
     this.updateBB();
-
-
-
-
-
-
-    
-
-
-
-
-
 
     //collision detection
     var that = this;
@@ -270,8 +268,7 @@ class MainChar {
                 if ((entity instanceof borders) && (that.lastBB.bottom <= entity.BB.top)) { // was above last tick
                         that.y = entity.BB.top - 80;
                         that.velocity.y = 0;
-
-                    if(that.state === 3) that.state = 0; // set state to idle
+                     // set state to idle
                     that.updateBB();
                 }
             }
@@ -297,15 +294,12 @@ class MainChar {
 
 
 
-
-
     // update state
     if (this.state !== 3 && this.state !== 6) {
         if (Math.abs(this.velocity.x) > MAX_WALK) this.state = 2;
         else if (Math.abs(this.velocity.x) >= MIN_WALK) this.state = 1;
         else this.state = 0;
     } 
-
     // update direction
     if (this.velocity.x < 0) this.facing = 1;
     if (this.velocity.x > 0) this.facing = 0;
