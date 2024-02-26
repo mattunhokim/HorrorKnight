@@ -204,45 +204,31 @@ class MainChar {
                         }
                     }
                 }
-
+            }
             
             ///Jumping physics
-            if (this.game.jump && this.velocity.y === 0) { // Jump only when grounded
-                if (Math.abs(this.velocity.x) < 16) { // Idle jump
+            if (this.game.jump) { // Jump only when grounded
+                if(this.velocity.y == 0){
                     this.velocity.y = -240;
-                    this.fallAcc = STOP_FALL_A;
+                    this.state = 3; // Set state to jumping
                 }
-                this.state = 3; // Set state to jumping
             }
-            
-                 // Apply gravity
+                // Apply gravity
                  this.velocity.y += this.fallAcc * TICK;
 
-     
-        } else{
-            if (this.velocity.y < 0 && this.game.jump) { // holding n while jumping jumps higher
-                if (this.fallAcc === STOP_FALL) this.velocity.y -= (STOP_FALL - STOP_FALL_A) * TICK;
-                if (this.fallAcc === WALK_FALL) this.velocity.y -= (WALK_FALL - WALK_FALL_A) * TICK;
-                if (this.fallAcc === RUN_FALL) this.velocity.y -= (RUN_FALL - RUN_FALL_A) * TICK;
 
-
-
-
-
-            // horizontal physics
-            if (this.game.right && !this.game.left) {
-                if (Math.abs(this.velocity.x) > MAX_WALK) {
-                    this.velocity.x += ACC_RUN * TICK;
-                } else this.velocity.x += ACC_WALK * TICK;
-            } else if (this.game.left && !this.game.right) {
-                if (Math.abs(this.velocity.x) > MAX_WALK) {
-                    this.velocity.x -= ACC_RUN * TICK;
-                } else this.velocity.x -= ACC_WALK * TICK;
-            } else {
-                // do nothing
-            }
-        }
-    }
+         // horizontal physics
+         if (this.game.right && !this.game.left) {
+             if (Math.abs(this.velocity.x) > MAX_WALK) {
+                 this.velocity.x += ACC_RUN * TICK;
+             } else this.velocity.x += ACC_WALK * TICK;
+         } else if (this.game.left && !this.game.right) {
+             if (Math.abs(this.velocity.x) > MAX_WALK) {
+                 this.velocity.x -= ACC_RUN * TICK;
+             } else this.velocity.x -= ACC_WALK * TICK;
+         } else {
+             // do nothing
+         }
 
     
                 
@@ -271,11 +257,6 @@ class MainChar {
 
 
     
-
-
-
-
-
 
 
 

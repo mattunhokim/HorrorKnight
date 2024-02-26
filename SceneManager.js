@@ -36,8 +36,8 @@ class SceneManager {
         if (this.x > 2250) { 
             this.x = 2250;
         }
-        if (this.y > 950*1) {
-            this.y = 950*1;
+        if (this.y > 950) {
+            this.y = 950;
         }
 
     }
