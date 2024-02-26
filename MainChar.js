@@ -274,6 +274,7 @@ class MainChar {
                 if ((entity instanceof borders) && (that.lastBB.bottom <= entity.BB.top)) { // was above last tick
                         that.y = entity.BB.top - 80;
                         that.velocity.y = 0;
+                        that.state = 0;
                      // set state to idle
                     that.updateBB();
                 }
@@ -281,6 +282,7 @@ class MainChar {
             else if (that.velocity.y < 0){
                 if ((entity instanceof borders) && (that.lastBB.top >= entity.BB.bottom)) { // was above last tick
                     that.velocity.y = 0;
+                    that.state = 0;
                 }
             }
             if (that.velocity.x > 0){
@@ -290,16 +292,18 @@ class MainChar {
                     that.velocity.x = 0;
                 }
                 that.updateBB();
+            }
 
                 // if character left collides with border right
                 // going left makes velocity negative 
-            if ((entity instanceof borders) && (-that.lastBB.left >= entity.BB.right)) {
+            else if (that.velocity.x < 0){
+                if ((entity instanceof borders) && (-that.lastBB.left >= entity.BB.right)) {
                     that.x = entity.BB.right + 80;
                     that.velocity.x = 0;
                 }
                 that.updateBB();
-
             }
+
         }
     });
 
