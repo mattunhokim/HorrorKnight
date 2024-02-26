@@ -6,7 +6,8 @@ class SceneManager {
         this.y = 0;
         this.width = 0;
         this.height = 0;
-        this.MainChar = new MainChar(this.game, 100, 0); // Create an instance of MainChar
+        // Official starting spot is 400, 0
+        this.MainChar = new MainChar(this.game, 400, 0); // Create an instance of MainChar
         this.game.addEntity(this.MainChar);
         // you gotta give values to this.x and this.y for dragon 
         this.Dragon = new Dragon(this.game, this.x, this.y); // Create an instance of Dragon   
@@ -60,6 +61,38 @@ class SceneManager {
         this.borders = new borders(this.game, 1000, 830, 250, 200);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 1050, 1030, 250, 350);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3193, 1592, 92, 30);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3350, 1545, 50, 50);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3435, 1452, 60, 30);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3303, 1352, 70, 20);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3161, 1375, 50, 80);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3150, 1710, 150, 280);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3298, 1755, 310, 200);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 2970, 1341, 130, 130);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 2890, 1248, 80, 223);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 2228, 1150, 660, 300);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1740, 1243, 490, 200);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1460, 1266, 280, 120);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3475, 1646, 55, 55);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3610, 1730, 225, 230);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3833, 1525, 215, 430);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 4030, 1476, 230, 553);
         this.game.addEntity(this.borders);
     }
 

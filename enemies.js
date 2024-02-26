@@ -135,7 +135,22 @@ class catfighter {
             this.updateBB();
         }
 
-        // collision detection will be implemented later
+        // collision detection
+        var that = this;
+        this.game.entities.forEach(function (entity) {
+            if (entity != that && entity.BB && that.BB.collide(entity.BB)) {
+                if (that.velocity.y > 0) { // falling
+                    if ((entity instanceof ground) // landing
+                        && (that.lastBB.bottom) <= entity.BB.top) { // was above last tick
+                        that.y = entity.BB.top - 80;
+                        that.velocity.y = 0;
+
+                        if (that.state === 3) that.state = 0; // set state to idle
+                        that.updateBB();
+                    }
+                }
+            }
+        });
     };
 
     draw(ctx) {
