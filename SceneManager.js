@@ -136,7 +136,7 @@ class SceneManager {
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 2705, 775, 255, 180);
         this.game.addEntity(this.borders);
-        this.borders = new borders(this.game, 2960, 850, 105, 120);
+        this.borders = new borders(this.game, 2960, 850, 105, 220);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 3070, 930, 82, 30);
         this.game.addEntity(this.borders);
@@ -157,6 +157,12 @@ class SceneManager {
         this.borders = new borders(this.game, 3488, 410, 302, 20);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 3790, 410, 709, 420);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3068, 1010, 1362, 220);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 4250, 1385, 310, 520);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1300, 1305, 160, 80);
         this.game.addEntity(this.borders);
     }
 
