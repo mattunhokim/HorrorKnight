@@ -137,7 +137,7 @@ class MainChar {
         const WALK_FALL_A = 421.875;
         const RUN_FALL_A = 562.5;
         
-        const MAX_FALL = -110;
+        const MAX_FALL = -210;
 
         const PUSH_BACK = .31;
 
@@ -232,18 +232,16 @@ class MainChar {
                 }
             }
                  ///Jumping physics
-                 if (this.game.jump) { // Jump only when grounded
-                     if(this.velocity.y == 0){
-                         this.velocity.y = -240;
+                 if ((this.game.jump) && (this.velocity.y == 0)){
+                         this.velocity.y = -340;
                          this.state = 3; // Set state to jumping
-                     }
-                 }
+                }
     // Apply gravity
       this.velocity.y -= this.fallAcc * TICK;
       // Gravity
       this.y -= this.velocity.y * TICK;
 
-    if (this.y >= 11100) {
+    if (this.y >= 3100) {
         this.y = 2250; // Set character on the ground
         this.velocity.y = 0; // Stop vertical movement
         this.state = 0; // Set state to idle or walking based on horizontal movement

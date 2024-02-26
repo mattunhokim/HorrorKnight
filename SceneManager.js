@@ -44,6 +44,10 @@ class SceneManager {
     }
 
     addBorders(){
+        this.borders = new borders(this.game, 0, 0, 4500, 10);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 4470, 0, 30, 1900);
+        this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 3, 0, 50, 1620);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 0, 810 * 2, 3150, 340);
