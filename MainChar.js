@@ -11,7 +11,6 @@ class MainChar {
         //, 0, 0, 80, 90, 9, .2);
 
         // Main Char State
-        //this.size = 0; // this will most likely be removed
         this.facing = 0; // 0 = right, 1 = left
         this.state = 0; // 0 = idle, 1 = walking, 2 = running, 3 = jumping, 4 = falling, 5 = attacking, 6 = healing
         this.dead = false;
@@ -87,8 +86,8 @@ class MainChar {
         //	this.animator[2][1] = new Animator(this.spritesheet, 1024, 721, 80, 90, 9, .2, 14, true, true);
 
         //test falling
-        //	this.animator[3][0] = new Animator(this.spritesheet, 1744, 721, 80, 90, 9, .2, 14, false, true);
-        //	this.animator[3][1] = new Animator(this.spritesheet, 304, 721, 80, 90, 9, .2, 14, true, true);
+        //this.animator[4][0] = new Animator(this.spritesheet, 1744, 721, -80, 80, 11, .1, false, true);
+        //this.animator[4][1] = new Animator(this.spritesheet, 304, 721, -80, 80, 11, .1, true, true);
 
         //test attacking
         //	this.animator[4][0] = new Animator(this.spritesheet, 1024, 320, 80, 90, 9, .2, 14, false, true);

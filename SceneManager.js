@@ -6,7 +6,8 @@ class SceneManager {
         this.y = 0;
         this.width = 0;
         this.height = 0;
-        this.MainChar = new MainChar(this.game, 100, 0); // Create an instance of MainChar
+        // Official starting spot is 400, 0
+        this.MainChar = new MainChar(this.game, 400, 0); // Create an instance of MainChar
         this.game.addEntity(this.MainChar);
         // you gotta give values to this.x and this.y for dragon 
         this.Dragon = new Dragon(this.game, this.x, this.y); // Create an instance of Dragon   
@@ -84,6 +85,14 @@ class SceneManager {
         this.borders = new borders(this.game, 1740, 1243, 490, 200);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 1460, 1266, 280, 120);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3475, 1646, 55, 55);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3610, 1730, 225, 230);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 3833, 1525, 215, 430);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 4030, 1476, 230, 553);
         this.game.addEntity(this.borders);
     }
 
