@@ -164,6 +164,8 @@ class SceneManager {
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 1300, 1305, 160, 80);
         this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 0, 0, 4500, 1);
+        this.game.addEntity(this.borders);
     }
 
     draw(ctx) {
