@@ -237,12 +237,18 @@ class MainChar {
                          this.velocity.y = -240;
                          this.state = 3; // Set state to jumping
                      }
-                     
                  }
-                         // Apply gravity
+    // Apply gravity
       this.velocity.y -= this.fallAcc * TICK;
       // Gravity
       this.y -= this.velocity.y * TICK;
+
+    if (this.y >= 11100) {
+        this.y = 2250; // Set character on the ground
+        this.velocity.y = 0; // Stop vertical movement
+        this.state = 0; // Set state to idle or walking based on horizontal movement
+    }
+
 
 
     // max speed calculation
@@ -270,6 +276,11 @@ class MainChar {
                         that.velocity.y = 0;
                      // set state to idle
                     that.updateBB();
+                }
+            }
+            else if (that.velocity.y < 0){
+                if ((entity instanceof borders) && (that.lastBB.top >= entity.BB.bottom)) { // was above last tick
+                    that.velocity.y = 0;
                 }
             }
             if (that.velocity.x > 0){
