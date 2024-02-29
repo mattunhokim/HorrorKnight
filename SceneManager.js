@@ -9,16 +9,23 @@ class SceneManager {
         // Official starting spot is 100, 0
         this.MainChar = new MainChar(this.game, 100, 0); // Create an instance of MainChar
         this.game.addEntity(this.MainChar);
-        // you gotta give values to this.x and this.y for dragon 
-        this.Dragon = new Dragon(this.game, this.x, this.y); // Create an instance of Dragon   
+        this.addDragons();
         this.addBorders();
-
-        //this.game.addEntity(this.Dragon);
+        this.goal = new goal(this.game, 4300, 110, 80, 300);
+        this.game.addEntity(this.goal);
+        this.winScreen = null; 
         this.startMap = new Background(this.game);
         this.game.addEntity(this.startMap);
     }
 
-
+    playBackgroundMusic() {
+        // Check if audio is allowed to play
+        if (this.game.audioAllowed) {
+            ASSET_MANAGER.playAsset("./music/Enter Hallownest.mp3");
+        } else {
+            console.log("Background music autoplay not allowed. Please interact with the page to enable audio.");
+        }
+    }
 
     update() {
         // Update camera position based on MainChar
@@ -40,13 +47,48 @@ class SceneManager {
         if (this.y > 950) {
             this.y = 950;
         }
-
+        
+        if(this.MainChar.win === true){
+            this.clearEntities();
+            this.winScreen = new winScreen(this.game);
+            this.game.addEntity(this.winScreen);
+            if (this.x < 0) {
+                this.x = 0;
+            }
+            if (this.y < 0) {
+                this.y = 0;
+            } 
+            if (this.x > 1920) { 
+                this.x = 1920;
+            }
+            if (this.y > 1080) {
+                this.y = 1080;
+            }
+            
+        }
+    }
+    clearEntities() {
+        this.game.entities.forEach(function (entity) {
+            entity.removeFromWorld = true;
+        });
+    };
+    addDragons(){
+        this.Dragon = new Dragon(this.game, 100, 0); // Create an instance of Dragon   
+        this.game.addEntity(this.Dragon);
     }
 
     addBorders(){
+        // test border
+        this.borders = new borders(this.game, 100, 200, 300, 10);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 200, 1400, 300, 10);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 200, 1000, 300, 10);
+        this.game.addEntity(this.borders);
+
         this.borders = new borders(this.game, 0, 0, 4500, 10);
         this.game.addEntity(this.borders);
-        this.borders = new borders(this.game, 4470, 0, 30, 1900);
+        this.borders = new borders(this.game, 4490, 0, 10, 1900);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 3, 0, 50, 1620);
         this.game.addEntity(this.borders);
@@ -178,6 +220,8 @@ class SceneManager {
         this.Dragon.draw(ctx);
         this.startMap.draw(ctx);
         this.borders.draw(ctx);
+        this.goal.draw(ctx);
+        this.winScreen.draw(ctx);
         }
         
 

@@ -18,9 +18,10 @@ class MainChar {
         this.width = 80;
 
         this.velocity = { x: 0, y: 0 };
-        this.fallAcc = 562.5;
+        this.fallAcc = 1000;
         this.speed = 200;
         this.updateBB();
+        this.win = false;
 
         this.animator = [];
         this.loadAnimations();
@@ -65,10 +66,16 @@ class MainChar {
         this.animator[2][1] = new Animator(this.spritesheet, 1024, 320, -80, 80, 6, .1, true, true);
 
         // jumping to the right 
-        this.animator[3][0] = new Animator(this.spritesheet, 1120, 716, 80, 80, 11, .1, true, false);
+        this.animator[3][0] = new Animator(this.spritesheet, 1120, 716, 80, 80, 5, .1, true, false);
         
         // jumping to the left 
-        this.animator[3][1] = new Animator(this.spritesheet, 1120, 716, -80, 80, 11, .1, true, true);
+        this.animator[3][1] = new Animator(this.spritesheet, 1120, 716, -80, 80, 5, .1, true, true);
+
+        // falling to the right 
+        this.animator[4][0] = new Animator(this.spritesheet, 1745, 716, 80, 80, 3, .1, true, false);
+        
+        // falling to the left 
+        this.animator[4][1] = new Animator(this.spritesheet, 1745, 716, -80, 80, 3, .1, true, true);
 
         // attacking to the right 
         this.animator[5][0] = new Animator(this.spritesheet, 1570, 320, 80, 80, 5, .1, true, false);
@@ -103,8 +110,12 @@ class MainChar {
     };
 
     updateBB() {
-        this.BB = new BoundingBox(this.x, this.y, this.height, this.width); //tried this.y = 90;
-    };
+        if (this.facing === 0) {
+            this.BB = new BoundingBox(this.x, this.y, this.height, this.width);
+        } else {
+            // Adjust bounding box position for left-facing character
+            this.BB = new BoundingBox(this.x - this.width, this.y, this.height, this.width);
+        }    };
 
     updateLastBB() {
         this.lastBB = this.BB;
@@ -129,17 +140,12 @@ class MainChar {
 
         const MIN_SKID = 33.75*10;
         
-        const STOP_FALL = 1575;
-        const WALK_FALL = 1800;
-        const RUN_FALL = 2025;
-        
-        const STOP_FALL_A = 450;
-        const WALK_FALL_A = 421.875;
-        const RUN_FALL_A = 562.5;
-        
-        const MAX_FALL = -210;
+        const STOP_FALL = 10; 
+        const STOP_FALL_A = 1;
+        const MAX_FALL = -110;
 
         const PUSH_BACK = .31;
+
 
 
         this.attack = 0;
@@ -147,6 +153,7 @@ class MainChar {
             this.canAttack = false;
         }
         if(this.game.attack && !this.game.run){
+            this.velocity.x = 0;
             this.lastAttack += TICK;
             this.state = 5;
           if(this.facing === 0){
@@ -165,91 +172,85 @@ class MainChar {
         // Ground physics
         // Jump Physics 
         // Not jumping  
-        if (this.state < 3){ // 0 = idle, 1 = walking, 2 = running, 3 = jumping, 4 = falling, 5 = attacking, 6 = healing
-                if (Math.abs(this.velocity.x) < MIN_WALK) {  // idle
-                    this.velocity.x = 0;
-                    this.state = 0;
-                    if (this.game.left && !this.game.down) {
-                        this.velocity.x -= MIN_WALK;
-                    }
-                    if (this.game.right && !this.game.down) {
-                        this.velocity.x += MIN_WALK;
-                    }
+        if (this.state !== 3){ // 0 = idle, 1 = walking, 2 = running, 3 = jumping, 4 = falling, 5 = attacking, 6 = healing
+            if (Math.abs(this.velocity.x) < MIN_WALK) {  // idle
+                this.velocity.x = 0;
+                this.state = 0;
+                if (this.game.left) {
+                    this.velocity.x -= MIN_WALK;
                 }
-                else if (Math.abs(this.velocity.x) >= MIN_WALK) {  // faster than a walk // accelerating or decelerating
-                    if (this.facing === 0) {
-                        if (this.game.right && !this.game.left && !this.game.down) {
-                            if (this.game.run) {
-                                this.velocity.x += ACC_RUN * TICK;
-                            } else {
-                                this.velocity.x += ACC_WALK * TICK;
-                            }
-                        } else if (this.game.left && !this.game.right && !this.game.down) {
-                            this.velocity.x -= DEC_SKID * TICK;
-                        } else {
-                            this.velocity.x -= DEC_REL * TICK;
-                        }
-                    }
-                    if (this.facing === 1) {
-                        if (this.game.left && !this.game.right && !this.game.down) {
-                            if (this.game.run) {
-                                this.velocity.x -= ACC_RUN * TICK;
-                            } else {
-                                this.velocity.x -= ACC_WALK * TICK;
-                            }
-                        } else if (this.game.right && !this.game.left && !this.game.down) {
-                            this.velocity.x += DEC_SKID * TICK;
-                        } else {
-                            this.velocity.x += DEC_REL * TICK;
-                        }
-                    }
-                }
-
-                else {
-                    // air physics
-                    // vertical physics
-                    if (this.velocity.y < 0 && this.game.A) { // holding A while jumping jumps higher
-                        if (this.fallAcc === STOP_FALL) this.velocity.y -= (STOP_FALL - STOP_FALL_A) * TICK;
-                        if (this.fallAcc === WALK_FALL) this.velocity.y -= (WALK_FALL - WALK_FALL_A) * TICK;
-                        if (this.fallAcc === RUN_FALL) this.velocity.y -= (RUN_FALL - RUN_FALL_A) * TICK;
-                    }
-                    // horizontal physics
-                    if (this.game.right && !this.game.left) {
-                        if (Math.abs(this.velocity.x) > MAX_WALK) {
-                        this.velocity.x += ACC_RUN * TICK;
-                        } 
-                        else this.velocity.x += ACC_WALK * TICK;
-                    } 
-                    else if (this.game.left && !this.game.right) {
-                        if (Math.abs(this.velocity.x) > MAX_WALK) {
-                        this.velocity.x -= ACC_RUN * TICK;
-                    } 
-                    else this.velocity.x -= ACC_WALK * TICK;
-                    } 
-                    else {
-                    // do nothing
-                    }
+                if (this.game.right) {
+                    this.velocity.x += MIN_WALK;
                 }
             }
-                 ///Jumping physics
-                 if ((this.game.jump) && (this.velocity.y == 0)){
-                         this.velocity.y = -340;
-                         this.state = 3; // Set state to jumping
+            else if (Math.abs(this.velocity.x) >= MIN_WALK) {  // faster than a walk // accelerating or decelerating
+                if (this.facing === 0) {
+                    if (this.game.right && !this.game.left) {
+                        if (this.game.run) {
+                            this.velocity.x += ACC_RUN * TICK;
+                        } else {
+                            this.velocity.x += ACC_WALK * TICK;
+                        }
+                    } else if (this.game.left && !this.game.right) {
+                        this.velocity.x -= DEC_SKID * TICK;
+                    } else {
+                        this.velocity.x -= DEC_REL * TICK;
+                    }
                 }
-    // Apply gravity
-      this.velocity.y -= this.fallAcc * TICK;
-      // Gravity
-      this.y -= this.velocity.y * TICK;
-
-    if (this.y >= 3100) {
-        this.y = 2250; // Set character on the ground
-        this.velocity.y = 0; // Stop vertical movement
-        this.state = 0; // Set state to idle or walking based on horizontal movement
+                if (this.facing === 1) {
+                    if (this.game.left && !this.game.right) {
+                        if (this.game.run) {
+                            this.velocity.x -= ACC_RUN * TICK;
+                        } else {
+                            this.velocity.x -= ACC_WALK * TICK;
+                        }
+                    } else if (this.game.right && !this.game.left) {
+                        this.velocity.x += DEC_SKID * TICK;
+                    } else {
+                        this.velocity.x += DEC_REL * TICK;
+                    }
+                }
+            } 
+            ///Jumping physics
+            if ((this.game.jump) && this.velocity.y === 0){   
+                   this.velocity.y = -110;
+                   this.fallAcc = STOP_FALL;
+                   this.state = 3; // Set state to jumping
+           }
+           
+            //else {
+            // // horizontal physics
+            //if (this.game.right && !this.game.left) {
+            //    if (Math.abs(this.velocity.x) > MAX_WALK) {
+            //    this.velocity.x += ACC_RUN * TICK;
+            //    } 
+            //    else this.velocity.x += ACC_WALK * TICK;
+            //    } 
+            //    else if (this.game.left && !this.game.right) {
+            //        if (Math.abs(this.velocity.x) > MAX_WALK) {
+            //        this.velocity.x -= ACC_RUN * TICK;
+            //    } 
+            //    else this.velocity.x -= ACC_WALK * TICK;
+            //    } 
+            //    else {
+            //    // do nothing
+            //    }
+            //    // air physics
+            //    // vertical physics
+            //if (this.velocity.y > 0 && this.game.A) { // holding A while jumping jumps higher
+            //    if (this.fallAcc === STOP_FALL) this.velocity.y -= 1;
+            //}
+                  
+               //}
     }
-
-
-
+        if (this.state !== 3) { // If not jumping
+            this.velocity.y -= 10 * TICK;
+        } else { // If jumping
+            this.velocity.y += this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
+        }
     // max speed calculation
+    // -210 >= -210 this.velocity.y = 210 // go up
+    // -210 <= -210 this.velocity.y = -210 // go down
     if (this.velocity.y >= MAX_FALL) this.velocity.y = -MAX_FALL;
     if (this.velocity.y <= MAX_FALL) this.velocity.y = MAX_FALL;   
     
@@ -258,11 +259,43 @@ class MainChar {
     if (this.velocity.x >= MAX_WALK && !this.game.run) this.velocity.x = MAX_WALK;
     if (this.velocity.x <= -MAX_WALK && !this.game.run) this.velocity.x = -MAX_WALK;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     // update position
-    this.x += this.velocity.x *  TICK * PARAMS.SCALE;
-    this.y += this.velocity.y *  TICK * PARAMS.SCALE;
+    this.x += this.velocity.x * TICK * PARAMS.SCALE;
+    this.y += this.velocity.y * TICK * PARAMS.SCALE;
     this.updateLastBB();
     this.updateBB();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //collision detection
     var that = this;
@@ -272,34 +305,55 @@ class MainChar {
                 if ((entity instanceof borders) && (that.lastBB.bottom <= entity.BB.top)) { // was above last tick
                         that.y = entity.BB.top - 80;
                         that.velocity.y = 0;
-                        that.state = 0;
-                     // set state to idle
+                        if(that.state === 3)that.state = 0;
                     that.updateBB();
                 }
+                if ((entity instanceof goal) && (that.lastBB.bottom <= entity.BB.top)) { 
+                    that.win = true;
+                }// was above last tick
+
             }
-            else if (that.velocity.y < 0){
+            else if (that.velocity.y < 0){ // jumping
                 if ((entity instanceof borders) && (that.lastBB.top >= entity.BB.bottom)) { // was above last tick
                     that.velocity.y = 0;
                     that.state = 0;
+                    that.updateBB();
                 }
             }
-            if (that.velocity.x > 0){
-                // if character right collides with border left
-                if ((entity instanceof borders) && (that.lastBB.right <= entity.BB.left)) { 
-                    that.x = entity.BB.left - 80;
-                    that.velocity.x = 0;
-                }
-                that.updateBB();
+            if(that.facing === 0){
+                    if ((entity instanceof borders) && (that.lastBB.right <= entity.BB.left)) { 
+                        that.x = entity.BB.left - 90;
+                        that.updateBB();
+                    }
+                    else if ((entity instanceof borders) && (that.lastBB.left >= entity.BB.right)) {
+                        that.x = entity.BB.right;
+                        that.updateBB();
+                    }
+                    if ((entity instanceof goal) && (that.lastBB.right <= entity.BB.left)) { 
+                        that.win = true;
+                    }
+                    else if ((entity instanceof goal) && (that.lastBB.left >= entity.BB.right)) { 
+                        that.win = true;
+                    }
             }
+            if(that.facing === 1){
+                    if ((entity instanceof borders) && (that.lastBB.left >= entity.BB.right)) { 
+                        that.x = entity.BB.right + 90;
+                        that.velocity.x = 0;
+                        that.updateBB();
 
-                // if character left collides with border right
-                // going left makes velocity negative 
-            else if (that.velocity.x < 0){
-                if ((entity instanceof borders) && (-that.lastBB.left >= entity.BB.right)) {
-                    that.x = entity.BB.right + 80;
-                    that.velocity.x = 0;
-                }
-                that.updateBB();
+                    }
+                    else if ((entity instanceof borders) && (that.lastBB.right <= entity.BB.left)) {
+                        that.x = entity.BB.left;
+                        that.updateBB();
+
+                    }
+                   if ((entity instanceof goal) && (that.lastBB.right <= entity.BB.right)) { 
+                        that.win = true;
+                    }
+                    else if ((entity instanceof goal) && (that.lastBB.left >= entity.BB.left)) { 
+                        that.win = true;
+                    }
             }
 
         }
@@ -312,12 +366,12 @@ class MainChar {
         if (Math.abs(this.velocity.x) > MAX_WALK) this.state = 2;
         else if (Math.abs(this.velocity.x) >= MIN_WALK) this.state = 1;
         else this.state = 0;
+        if (Math.abs(this.velocity.y) > 0) this.state = 4;
+        if (Math.abs(this.velocity.y) < 0) this.state = 3;
     } 
     // update direction
     if (this.velocity.x < 0) this.facing = 1;
     if (this.velocity.x > 0) this.facing = 0;
-
-
     };
 
     draw(ctx) {

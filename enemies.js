@@ -19,6 +19,7 @@ class Dragon {
         this.fallAcc = 562.5;
         this.speed = 200;
         //this.updateBB();
+        this.velocity = {x:0, y:0};
 
         this.animator = [];
         this.loadAnimations();
@@ -29,19 +30,19 @@ class Dragon {
         for (var i = 0; i < 4; i++) { // four states
             this.animator.push([i]);
         }
-            
-
         //test moving to the right
-        this.animator[0] = new Animator(this.spritesheet, 0, 159, 175, 129, 7, .2, 14, false, true);
+        this.animator[0] = new Animator(this.spritesheet, 0, 159, 175, 129, 7, .2, true, false);
 
         //test moving to the left
-        this.animator[1] = new Animator(this.spritesheet, 0, 479, 175, 129, 9, 1, 14, true, true);
+        //this.animator[1] = new Animator(this.spritesheet, 0, 479, -175, 129, 9, 1, true, true);
 
         //test moving up
-        this.animator[2] = new Animator(this.spritesheet, 0, 0, 175, 129, 7, .2, 14, false, true);
+        //this.animator[2] = new Animator(this.spritesheet, 0, 0, 175, 129, 7, .1, false, true);
 
         //test moving down
-        this.animator[3] = new Animator(this.spritesheet, 0, 319, 175, 129, 7, .2, 14, false, true);
+        //this.animator[3] = new Animator(this.spritesheet, 0, 319, -175, 129, 7, .1, false, true);
+
+
     }
 
     updateBB() {
@@ -61,7 +62,7 @@ class Dragon {
 
     draw(ctx) {
         if (!this.dead) {
-            this.animator[this.facing].drawFrame(this.game.clockTick, ctx, this.x, this.y, 1);
+            this.animator[this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x, this.y-this.game.camera.y, .5);
             //ctx.drawImage(this.idle,
             //    0, 150,                // source coordinates (x, y) on the sprite sheet
             //    100, 100,               // width and height of the source frame on the sprite sheet
@@ -154,7 +155,7 @@ class catfighter {
     };
 
     draw(ctx) {
-        this.animatior[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE);
+        this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE);
     };
 }
 
