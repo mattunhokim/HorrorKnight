@@ -18,7 +18,7 @@ class MainChar {
         this.width = 80;
 
         this.velocity = { x: 0, y: 0 };
-        this.fallAcc = 1000;
+        this.fallAcc = 600;
         this.speed = 200;
         this.updateBB();
         this.win = false;
@@ -213,11 +213,12 @@ class MainChar {
             } 
             ///Jumping physics
             if ((this.game.jump) && this.velocity.y === 0){   
+                
                    this.velocity.y = -110;
                    this.fallAcc = STOP_FALL;
                    this.state = 3; // Set state to jumping
            }
-           
+
             //else {
             // // horizontal physics
             //if (this.game.right && !this.game.left) {
@@ -243,11 +244,7 @@ class MainChar {
                   
                //}
     }
-        if (this.state !== 3) { // If not jumping
-            this.velocity.y -= 10 * TICK;
-        } else { // If jumping
-            this.velocity.y += this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
-        }
+            this.velocity.y -= this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
     // max speed calculation
     // -210 >= -210 this.velocity.y = 210 // go up
     // -210 <= -210 this.velocity.y = -210 // go down

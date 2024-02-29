@@ -19,7 +19,7 @@ class Dragon {
         this.fallAcc = 562.5;
         this.speed = 200;
         //this.updateBB();
-        this.velocity = {x:0, y:0};
+        this.velocity = {x:0, y}
 
         this.animator = [];
         this.loadAnimations();
@@ -155,7 +155,7 @@ class catfighter {
     };
 
     draw(ctx) {
-        this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE);
+        this.animatior[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camera.x, this.y, PARAMS.SCALE);
     };
 }
 
