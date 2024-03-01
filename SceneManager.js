@@ -92,13 +92,6 @@ class SceneManager {
     };
 
     addBorders(){
-        // test border
-        this.borders = new borders(this.game, 100, 200, 300, 10);
-        this.game.addEntity(this.borders);
-        this.borders = new borders(this.game, 200, 1400, 300, 10);
-        this.game.addEntity(this.borders);
-        this.borders = new borders(this.game, 200, 1000, 300, 10);
-        this.game.addEntity(this.borders);
 
         this.borders = new borders(this.game, 0, 0, 4500, 10);
         this.game.addEntity(this.borders);
@@ -112,9 +105,9 @@ class SceneManager {
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 856, 100, 200, 100);
         this.game.addEntity(this.borders);
-        this.borders = new borders(this.game, 860, 200, 200, 330);
+        //this.borders = new borders(this.game, 860, 200, 200, 330);
         this.game.addEntity(this.borders);
-        this.borders = new borders(this.game, 950, 530, 200, 100);
+        //this.borders = new borders(this.game, 950, 530, 200, 100);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 975, 630, 200, 200);
         this.game.addEntity(this.borders);
@@ -175,6 +168,10 @@ class SceneManager {
         this.borders = new borders(this.game, 1810, 780, 100, 65);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 1710, 730, 100, 115);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1110, 0, 1200, 265);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 2310, 0, 1500, 100);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 1625, 650, 115, 78);
         this.game.addEntity(this.borders);
