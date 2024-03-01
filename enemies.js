@@ -34,41 +34,48 @@ class Dragon {
         this.animator[0] = new Animator(this.spritesheet, 0, 159, 175, 129, 7, .2, true, false);
 
         //test moving to the left
-        //this.animator[1] = new Animator(this.spritesheet, 0, 479, -175, 129, 9, 1, true, true);
+        this.animator[1] = new Animator(this.spritesheet, 0, 479, -175, 129, 9, 1, true, true);
 
         //test moving up
-        //this.animator[2] = new Animator(this.spritesheet, 0, 0, 175, 129, 7, .1, false, true);
+        this.animator[2] = new Animator(this.spritesheet, 0, 0, 175, 129, 7, .1, false, true);
 
         //test moving down
-        //this.animator[3] = new Animator(this.spritesheet, 0, 319, -175, 129, 7, .1, false, true);
+        this.animator[3] = new Animator(this.spritesheet, 0, 319, -175, 129, 7, .1, false, true);
 
 
     }
 
     updateBB() {
-        this.BB = new BoundingBox(this.x, this.y, PARAMS.BLOCKWIDTH, PARAMS.BLOCKWIDTH);
+        if (this.facing === 0) {
+            this.BB = new BoundingBox(this.x, this.y, this.height, this.width);
+        } else {
+            // Adjust bounding box position for left-facing character
+            this.BB = new BoundingBox(this.x - this.width, this.y, this.height, this.width);
+        }
+    };
+
+    updateLastBB() {
+        this.lastBB = this.BB;
     };
 
     update() {
         
            // this.x += this.velocity.x;
-           // this.y += this.velocity.y;
+        // this.y += this.velocity.y;
+        //this.x += this.velocity.x * TICK * PARAMS.SCALE;
+        //this.y += this.velocity.y * TICK * PARAMS.SCALE;
+        this.updateLastBB();
         this.updateBB();
 
         this.x += this.speed * this.game.clockTick;        
 
-        // collision detection will be implemented later
+        
     };
 
     draw(ctx) {
         if (!this.dead) {
             this.animator[this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x, this.y-this.game.camera.y, .5);
-            //ctx.drawImage(this.idle,
-            //    0, 150,                // source coordinates (x, y) on the sprite sheet
-            //    100, 100,               // width and height of the source frame on the sprite sheet
-            //    this.x + 250, this.y,                 // destination coordinates (x, y) on the canvas
-            //    100, 100        // width and height of the destination frame on the canvas, scaled by 2
-            //);
+            
         }
        
     };
