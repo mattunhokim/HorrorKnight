@@ -305,13 +305,21 @@ class MainChar {
                         if(that.state === 3)that.state = 0;
                     that.updateBB();
                 }
+                if ((entity instanceof spikes) && (that.lastBB.bottom <= entity.BB.top)) {
+                    that.win = false;
+                    that.dead = true;
+                }
+                if ((entity instanceof Dragon) && (that.lastBB.bottom <= entity.BB.top)) {
+                    that.win = false;
+                    that.dead = true;
+                }
                 if ((entity instanceof goal) && (that.lastBB.bottom <= entity.BB.top)) { 
                     that.win = true;
                 }// was above last tick
 
             }
             else if (that.velocity.y < 0){ // jumping
-                if ((entity instanceof borders) && (that.lastBB.top >= entity.BB.bottom)) { // was above last tick
+                if ((entity instanceof borders) || (entity instanceof spikes) && (that.lastBB.top >= entity.BB.bottom)) { // was above last tick
                     that.velocity.y = 0;
                     that.state = 0;
                     that.updateBB();
@@ -325,6 +333,22 @@ class MainChar {
                     else if ((entity instanceof borders) && (that.lastBB.left >= entity.BB.right)) {
                         that.x = entity.BB.right;
                         that.updateBB();
+                    }
+                    if ((entity instanceof spikes) && (that.lastBB.right <= entity.BB.left)) {
+                        that.win = false;
+                        that.dead = true;
+                    }
+                    else if ((entity instanceof spikes) && (that.lastBB.left >= entity.BB.right)) {
+                        that.win = false;
+                        that.dead = true;
+                    }
+                    if ((entity instanceof Dragon) && (that.lastBB.right <= entity.BB.left)) {
+                        that.win = false;
+                        that.dead = true;
+                    }
+                    else if ((entity instanceof Dragon) && (that.lastBB.left >= entity.BB.right)) {
+                        that.win = false;
+                        that.dead = true;
                     }
                     if ((entity instanceof goal) && (that.lastBB.right <= entity.BB.left)) { 
                         that.win = true;
@@ -345,7 +369,23 @@ class MainChar {
                         that.updateBB();
 
                     }
-                   if ((entity instanceof goal) && (that.lastBB.right <= entity.BB.right)) { 
+                    if ((entity instanceof spikes) && (that.lastBB.right <= entity.BB.left)) {
+                        that.win = false;
+                        that.dead = true;
+                    }
+                    else if ((entity instanceof spikes) && (that.lastBB.left >= entity.BB.right)) {
+                       that.win = false;
+                       that.dead = true;
+                    }
+                    if ((entity instanceof Dragon) && (that.lastBB.right <= entity.BB.left)) {
+                       that.win = false;
+                       that.dead = true;
+                    }
+                    else if ((entity instanceof Dragon) && (that.lastBB.left >= entity.BB.right)) {
+                       that.win = false;
+                       that.dead = true;
+                    }
+                    if ((entity instanceof goal) && (that.lastBB.right <= entity.BB.right)) { 
                         that.win = true;
                     }
                     else if ((entity instanceof goal) && (that.lastBB.left >= entity.BB.left)) { 
