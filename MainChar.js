@@ -18,11 +18,11 @@ class MainChar {
         this.width = 80;
 
         this.velocity = { x: 0, y: 0 };
-        this.fallAcc = 600;
+        this.fallAcc = -200;
         this.speed = 200;
         this.updateBB();
         this.win = false;
-
+        this.lose = false;
         this.animator = [];
         this.loadAnimations();
         this.lastAttack = 0;
@@ -66,10 +66,10 @@ class MainChar {
         this.animator[2][1] = new Animator(this.spritesheet, 1024, 320, -80, 80, 6, .1, true, true);
 
         // jumping to the right 
-        this.animator[3][0] = new Animator(this.spritesheet, 1120, 716, 80, 80, 5, .1, true, false);
+        this.animator[3][0] = new Animator(this.spritesheet, 1120, 716, 80, 80, 5, 1, true, false);
         
         // jumping to the left 
-        this.animator[3][1] = new Animator(this.spritesheet, 1120, 716, -80, 80, 5, .1, true, true);
+        this.animator[3][1] = new Animator(this.spritesheet, 1120, 716, -80, 80, 5, 1, true, true);
 
         // falling to the right 
         this.animator[4][0] = new Animator(this.spritesheet, 1745, 716, 80, 80, 3, .1, true, false);
@@ -111,10 +111,10 @@ class MainChar {
 
     updateBB() {
         if (this.facing === 0) {
-            this.BB = new BoundingBox(this.x, this.y, this.height, this.width);
+            this.BB = new BoundingBox(this.x+10, this.y+10, this.width-20, this.height-10);
         } else {
             // Adjust bounding box position for left-facing character
-            this.BB = new BoundingBox(this.x - this.width, this.y, this.height, this.width);
+            this.BB = new BoundingBox(this.x - this.width + 10, this.y+10, this.width-20, this.height-10);
         }    };
 
     updateLastBB() {
@@ -126,7 +126,8 @@ class MainChar {
     }
 
     update() { // must fix
-        const TICK = this.game.clockTick;
+        var TICK = this.game.clockTick;
+        console.log("Clock tick:", TICK);
         const MIN_WALK = 5.453125*10;
         const MAX_WALK = 13.75*10;
 
@@ -142,7 +143,7 @@ class MainChar {
         
         const STOP_FALL = 10; 
         const STOP_FALL_A = 1;
-        const MAX_FALL = -110;
+        const MAX_FALL = -210;
 
         const PUSH_BACK = .31;
 
@@ -211,14 +212,26 @@ class MainChar {
                     }
                 }
             } 
-            ///Jumping physics
-            if ((this.game.jump) && this.velocity.y === 0){   
-                
-                   this.velocity.y = -110;
-                   this.fallAcc = STOP_FALL;
-                   this.state = 3; // Set state to jumping
-           }
+            this.velocity.y += this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
 
+            ///Jumping physics<
+            
+            if (this.state !== 3 && this.velocity.y < 0) { // Not already jumping
+                if (this.game.jump) {
+                    // Check if conditions for initiating a jump are met
+                    this.velocity.y = -220; // Adjust jump velocity
+                    this.fallAcc === STOP_FALL;
+                    this.state = 3; // Set character state to jumping
+                    if(this.velocity.x > 0){
+                        this.facing = 0;
+                    }
+                    if(this.velocity.x < 0){
+                        this.facing = 1;
+                    }
+                    this.velocity.y += this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
+
+                }
+            }
             //else {
             // // horizontal physics
             //if (this.game.right && !this.game.left) {
@@ -244,7 +257,7 @@ class MainChar {
                   
                //}
     }
-            this.velocity.y -= this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
+    this.velocity.y += this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
     // max speed calculation
     // -210 >= -210 this.velocity.y = 210 // go up
     // -210 <= -210 this.velocity.y = -210 // go down
@@ -306,11 +319,11 @@ class MainChar {
                     that.updateBB();
                 }
                 if ((entity instanceof spikes) && (that.lastBB.bottom <= entity.BB.top)) {
-                    that.win = false;
+                    that.lose = true;
                     that.dead = true;
                 }
                 if ((entity instanceof Dragon) && (that.lastBB.bottom <= entity.BB.top)) {
-                    that.win = false;
+                    that.lose = true;
                     that.dead = true;
                 }
                 if ((entity instanceof goal) && (that.lastBB.bottom <= entity.BB.top)) { 
@@ -320,34 +333,26 @@ class MainChar {
             }
             else if (that.velocity.y < 0){ // jumping
                 if ((entity instanceof borders) || (entity instanceof spikes) && (that.lastBB.top >= entity.BB.bottom)) { // was above last tick
-                    that.velocity.y = 0;
+                    that.velocity.y = 300;
                     that.state = 0;
                     that.updateBB();
                 }
             }
             if(that.facing === 0){
                     if ((entity instanceof borders) && (that.lastBB.right <= entity.BB.left)) { 
-                        that.x = entity.BB.left - 90;
+                        that.x = entity.BB.left - 85;
                         that.updateBB();
                     }
                     else if ((entity instanceof borders) && (that.lastBB.left >= entity.BB.right)) {
                         that.x = entity.BB.right;
                         that.updateBB();
                     }
-                    if ((entity instanceof spikes) && (that.lastBB.right <= entity.BB.left)) {
-                        that.win = false;
-                        that.dead = true;
-                    }
-                    else if ((entity instanceof spikes) && (that.lastBB.left >= entity.BB.right)) {
-                        that.win = false;
-                        that.dead = true;
-                    }
                     if ((entity instanceof Dragon) && (that.lastBB.right <= entity.BB.left)) {
-                        that.win = false;
+                        that.lose = true;
                         that.dead = true;
                     }
                     else if ((entity instanceof Dragon) && (that.lastBB.left >= entity.BB.right)) {
-                        that.win = false;
+                        that.lose = true;
                         that.dead = true;
                     }
                     if ((entity instanceof goal) && (that.lastBB.right <= entity.BB.left)) { 
@@ -359,7 +364,7 @@ class MainChar {
             }
             if(that.facing === 1){
                     if ((entity instanceof borders) && (that.lastBB.left >= entity.BB.right)) { 
-                        that.x = entity.BB.right + 90;
+                        that.x = entity.BB.right + 85;
                         that.velocity.x = 0;
                         that.updateBB();
 
@@ -369,14 +374,7 @@ class MainChar {
                         that.updateBB();
 
                     }
-                    if ((entity instanceof spikes) && (that.lastBB.right <= entity.BB.left)) {
-                        that.win = false;
-                        that.dead = true;
-                    }
-                    else if ((entity instanceof spikes) && (that.lastBB.left >= entity.BB.right)) {
-                       that.win = false;
-                       that.dead = true;
-                    }
+
                     if ((entity instanceof Dragon) && (that.lastBB.right <= entity.BB.left)) {
                        that.win = false;
                        that.dead = true;
@@ -403,12 +401,13 @@ class MainChar {
         if (Math.abs(this.velocity.x) > MAX_WALK) this.state = 2;
         else if (Math.abs(this.velocity.x) >= MIN_WALK) this.state = 1;
         else this.state = 0;
-        if (Math.abs(this.velocity.y) > 0) this.state = 4;
-        if (Math.abs(this.velocity.y) < 0) this.state = 3;
+        if (Math.abs(this.velocity.y) > 0 ) this.state = 4; 
+        else if (Math.abs(this.velocity.y) < 0) this.state = 3;
     } 
     // update direction
     if (this.velocity.x < 0) this.facing = 1;
     if (this.velocity.x > 0) this.facing = 0;
+
     };
 
     draw(ctx) {

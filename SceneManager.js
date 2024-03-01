@@ -18,16 +18,9 @@ class SceneManager {
         this.game.addEntity(this.startMap);
     }
 
-    playBackgroundMusic() {
-        // Check if audio is allowed to play
-        if (this.game.audioAllowed) {
-            ASSET_MANAGER.playAsset("./music/Enter Hallownest.mp3");
-        } else {
-            console.log("Background music autoplay not allowed. Please interact with the page to enable audio.");
-        }
-    }
-
     update() {
+        //ASSET_MANAGER.playAsset("./music/Enter Hallownest.mp3");
+
         // Update camera position based on MainChar
         let midpointX = PARAMS.CANVAS_WIDTH / 2 - 40;
         let midpointY = PARAMS.CANVAS_HEIGHT / 2 - 40;
@@ -64,8 +57,20 @@ class SceneManager {
             if (this.y > 1080) {
                 this.y = 1080;
             }
-            
         }
+        if(this.MainChar.lose == true){
+            this.clearEntities();
+            this.winScreen = new winScreen(this.game);
+            this.game.addEntity(this.winScreen)
+        }
+
+        
+        var that = this;
+        var MainChar = false;
+        this.game.entities.forEach(function(entity) {
+            if(that.MainChar === entity) MainChar = true;
+        });
+        if(!MainChar) this.game.addEntity(this.MainChar);
     }
     clearEntities() {
         this.game.entities.forEach(function (entity) {
@@ -76,6 +81,15 @@ class SceneManager {
         this.Dragon = new Dragon(this.game, 100, 0); // Create an instance of Dragon   
         this.game.addEntity(this.Dragon);
     }
+    
+    updateAudio() {
+        var mute = document.getElementById("mute").checked;
+        var volume = document.getElementById("volume").value;
+
+        ASSET_MANAGER.muteAudio(mute);
+        ASSET_MANAGER.adjustVolume(volume);
+
+    };
 
     addBorders(){
         // test border
@@ -170,9 +184,9 @@ class SceneManager {
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 1200, 505, 252, 70);
         this.game.addEntity(this.borders);
-        this.borders = new borders(this.game, 1740, 475, 102, 90);
+        this.borders = new borders(this.game, 1740, 475, 102, 60);
         this.game.addEntity(this.borders);
-        this.borders = new borders(this.game, 1840, 465, 142, 140);
+        this.borders = new borders(this.game, 1840, 465, 142, 130);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 1980, 415, 121, 90);
         this.game.addEntity(this.borders);

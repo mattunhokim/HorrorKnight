@@ -82,14 +82,16 @@ class AssetManager {
     };
     playAsset(path) {
         let audio = this.cache[path];
-        if (this.audioAllowed) {
+        if (audio.currentTime != 0) {
+            let bak = audio.cloneNode();
+            bak.currentTime = 0;
+            bak.volume = audio.volume;
+            bak.play();
+        } else {
             audio.currentTime = 0;
             audio.play();
-        } else {
-            console.log('Audio autoplay is not allowed by the user.');
         }
     };
-
     muteAudio(mute) {
         for (var key in this.cache) {
             let asset = this.cache[key];
