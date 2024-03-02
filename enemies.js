@@ -74,6 +74,8 @@ class Dragon {
             this.y += this.speed * this.game.clockTick;
         } else if (this.facing == 2) {
             this.y -= this.speed * this.game.clockTick;
+        } else if (this.facing == 3) {
+            this.y += this.speed * this.game.clockTick;
         }
 
         
