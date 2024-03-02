@@ -82,6 +82,12 @@ class SceneManager {
         this.game.addEntity(this.Dragon);
         this.Dragon = new Dragon(this.game, 1400, 0, 1);
         this.game.addEntity(this.Dragon);
+        this.Dragon = new Dragon(this.game, 3400, 0, 1);
+        this.game.addEntity(this.Dragon);
+        this.Dragon = new Dragon(this.game, 2400, 80, 0);
+        this.game.addEntity(this.Dragon);
+        this.Dragon = new Dragon(this.game, 2600, 80, 1);
+        this.game.addEntity(this.Dragon);
     }
     
     updateAudio() {
