@@ -1,25 +1,23 @@
 class Dragon {
-    constructor(game, x, y) {
-        Object.assign(this, { game, x, y });
+    constructor(game, x, y, facing) {
+        Object.assign(this, { game, x, y , facing});
         this.game.Dragon = this;
         //this.velocity = { x: -PARAMS.BITWIDTH, y: PARAMS.BITWIDTH * 3 };
 
         this.spritesheet = ASSET_MANAGER.getAsset("./assets/dragon.png");
         this.idle = ASSET_MANAGER.getAsset("./assets/dragon.png");
         //this.animation = new Animator(this.spritesheet, 0, 160, 100, 100, 1, 0.5, 0, false, true);
-       // this.dead = false;
+       this.dead = false;
        // this.deadCounter = 0;
         //this.state = 0; // 0 = idle, 1 = flying
-        this.x = 0;
-        this.y = 0;
-        this.facing = 0; // 0 = right, 1 = left, 2 = up, 3 = down
+        this.facing = facing; // 0 = right, 1 = left, 2 = up, 3 = down
         //this.flickerFlag = true;
        // this.updateBB();
 
         this.fallAcc = 562.5;
         this.speed = 200;
-        //this.updateBB();
-        this.velocity = {x:0, y}
+        this.updateBB();
+        this.velocity = { x: 0, y: 0 }
 
         this.animator = [];
         this.loadAnimations();
@@ -34,7 +32,7 @@ class Dragon {
         this.animator[0] = new Animator(this.spritesheet, 0, 159, 175, 129, 7, .2, true, false);
 
         //test moving to the left
-        this.animator[1] = new Animator(this.spritesheet, 0, 479, -175, 129, 9, 1, true, true);
+        this.animator[1] = new Animator(this.spritesheet, 572, 479, -175, 129, 7, .2, true, true);
 
         //test moving up
         this.animator[2] = new Animator(this.spritesheet, 0, 0, 175, 129, 7, .1, false, true);
@@ -67,7 +65,15 @@ class Dragon {
         this.updateLastBB();
         this.updateBB();
 
+        
         this.x += this.speed * this.game.clockTick;        
+
+        this.y += this.speed * this.game.clockTick;
+
+        if (this.facing == 1) {
+            this.x -= this.speed * this.game.clockTick;
+
+        }
 
         
     };

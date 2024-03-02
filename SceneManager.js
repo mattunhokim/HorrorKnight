@@ -78,7 +78,9 @@ class SceneManager {
         });
     };
     addDragons(){
-        this.Dragon = new Dragon(this.game, 100, 0); // Create an instance of Dragon   
+        this.Dragon = new Dragon(this.game, 295, 0, 0); // Create an instance of Dragon
+        this.game.addEntity(this.Dragon);
+        this.Dragon = new Dragon(this.game, 350, 10, 1);
         this.game.addEntity(this.Dragon);
     }
     
@@ -226,6 +228,12 @@ class SceneManager {
         this.borders = new borders(this.game, 1980, 500, 412, 100);
         this.game.addEntity(this.borders);
         this.borders = new borders(this.game, 2280, 600, 112, 380);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1280, 800, 200, 50);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1510, 890, 100, 100);
+        this.game.addEntity(this.borders);
+        this.borders = new borders(this.game, 1770, 1010, 42, 30);
         this.game.addEntity(this.borders);
     }
 
