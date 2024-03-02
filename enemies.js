@@ -65,14 +65,15 @@ class Dragon {
         this.updateLastBB();
         this.updateBB();
 
-        
-        this.x += this.speed * this.game.clockTick;        
+        if (this.facing == 0) {
+            this.x += this.speed * this.game.clockTick;
 
-        this.y += this.speed * this.game.clockTick;
-
-        if (this.facing == 1) {
+            this.y += this.speed * this.game.clockTick;
+        } else if (this.facing == 1) {
             this.x -= this.speed * this.game.clockTick;
-
+            this.y += this.speed * this.game.clockTick;
+        } else if (this.facing == 2) {
+            this.y -= this.speed * this.game.clockTick;
         }
 
         

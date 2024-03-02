@@ -80,7 +80,7 @@ class SceneManager {
     addDragons(){
         this.Dragon = new Dragon(this.game, 295, 0, 0); // Create an instance of Dragon
         this.game.addEntity(this.Dragon);
-        this.Dragon = new Dragon(this.game, 350, 10, 1);
+        this.Dragon = new Dragon(this.game, 1400, 0, 1);
         this.game.addEntity(this.Dragon);
     }
     
