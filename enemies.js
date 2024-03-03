@@ -29,16 +29,16 @@ class Dragon {
             this.animator.push([i]);
         }
         //test moving to the right
-        this.animator[0] = new Animator(this.spritesheet, 0, 159, 175, 129, 7, .2, true, false);
+        this.animator[0] = new Animator(this.spritesheet, 0, 159, 175, 129, 7, .01, true, false);
 
         //test moving to the left
-        this.animator[1] = new Animator(this.spritesheet, 572, 479, -175, 129, 7, .2, true, true);
+        this.animator[1] = new Animator(this.spritesheet, 572, 479, -175, 129, 7, .01, true, true);
 
         //test moving up
-        this.animator[2] = new Animator(this.spritesheet, 0, 0, 175, 129, 7, .1, false, true);
+        this.animator[2] = new Animator(this.spritesheet, 0, 0, 175, 129, 7, .01, false, true);
 
         //test moving down
-        this.animator[3] = new Animator(this.spritesheet, 0, 319, -175, 129, 7, .1, false, true);
+        this.animator[3] = new Animator(this.spritesheet, 0, 319, -175, 129, 7, .01, false, true);
 
 
     }
