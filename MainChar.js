@@ -322,10 +322,10 @@ class MainChar {
                     that.lose = true;
                     that.dead = true;
                 }
-                if ((entity instanceof Dragon) && (that.lastBB.bottom <= entity.BB.top)) {
-                    that.lose = true;
-                    that.dead = true;
-                }
+                //if ((entity instanceof Dragon) && (that.lastBB.bottom <= entity.BB.top)) {
+                //    that.lose = true;
+                //    that.dead = true;
+                //}
                 if ((entity instanceof goal) && (that.lastBB.bottom <= entity.BB.top)) { 
                     that.win = true;
                 }// was above last tick
@@ -347,14 +347,7 @@ class MainChar {
                         that.x = entity.BB.right;
                         that.updateBB();
                     }
-                    if ((entity instanceof Dragon) && (that.lastBB.right <= entity.BB.left)) {
-                        that.lose = true;
-                        that.dead = true;
-                    }
-                    else if ((entity instanceof Dragon) && (that.lastBB.left >= entity.BB.right)) {
-                        that.lose = true;
-                        that.dead = true;
-                    }
+                    
                     if ((entity instanceof goal) && (that.lastBB.right <= entity.BB.left)) { 
                         that.win = true;
                     }
@@ -375,14 +368,14 @@ class MainChar {
 
                     }
 
-                    if ((entity instanceof Dragon) && (that.lastBB.right <= entity.BB.left)) {
-                       that.win = false;
-                       that.dead = true;
-                    }
-                    else if ((entity instanceof Dragon) && (that.lastBB.left >= entity.BB.right)) {
-                       that.win = false;
-                       that.dead = true;
-                    }
+                    //if ((entity instanceof Dragon) && (that.lastBB.right <= entity.BB.left)) {
+                    //   that.win = false;
+                    //   that.dead = true;
+                    //}
+                    //else if ((entity instanceof Dragon) && (that.lastBB.left >= entity.BB.right)) {
+                    //   that.win = false;
+                   //    that.dead = true;
+                    //}
                     if ((entity instanceof goal) && (that.lastBB.right <= entity.BB.right)) { 
                         that.win = true;
                     }
@@ -390,6 +383,14 @@ class MainChar {
                         that.win = true;
                     }
             }
+            if (entity instanceof Dragon) {
+                that.lose = true;
+                that.dead = true;
+            }
+            //else if ((entity instanceof Dragon) && (that.lastBB.left >= entity.BB.right)) {
+            //    that.lose = true;
+            //    that.dead = true;
+           // }
 
         }
     });

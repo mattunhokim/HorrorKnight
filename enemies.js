@@ -12,7 +12,10 @@ class Dragon {
         //this.state = 0; // 0 = idle, 1 = flying
         this.facing = facing; // 0 = right, 1 = left, 2 = up, 3 = down
         //this.flickerFlag = true;
-       // this.updateBB();
+        // this.updateBB();
+
+        this.height = 130;
+        this.width = 130;
 
         this.fallAcc = 562.5;
         this.speed = 200;
