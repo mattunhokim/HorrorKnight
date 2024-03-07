@@ -32,10 +32,10 @@ class Dragon {
             this.animator.push([i]);
         }
         //test moving to the right
-        this.animator[0] = new Animator(this.spritesheet, 0, 159, 175, 129, 7, .007, true, false);
+        this.animator[0] = new Animator(this.spritesheet, 0, 159, 170, 129, 7, .007, true, false);
 
         //test moving to the left
-        this.animator[1] = new Animator(this.spritesheet, 572, 479, -175, 129, 7, .007, true, true);
+        this.animator[1] = new Animator(this.spritesheet, 572, 479, -170, 129, 7, .007, true, true);
 
         //test moving up
         this.animator[2] = new Animator(this.spritesheet, 0, 0, 175, 129, 7, .01, false, true);
