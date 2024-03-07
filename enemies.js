@@ -14,8 +14,8 @@ class Dragon {
         //this.flickerFlag = true;
         // this.updateBB();
 
-        this.height = 130;
-        this.width = 130;
+        this.height = 80;
+        this.width = 80;
 
         this.fallAcc = 562.5;
         this.speed = 200;
