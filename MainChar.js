@@ -216,7 +216,7 @@ class MainChar {
 
             ///Jumping physics<
             
-            if (this.state !== 3 && this.velocity.y > 0) { // Not already jumping
+            if (this.state !== 3 && this.velocity.y < 19 ) { // Not already jumping
                 if (this.game.jump) {
                     // Check if conditions for initiating a jump are met
                     this.velocity.y = -220; // Adjust jump velocity
