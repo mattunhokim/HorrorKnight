@@ -18,7 +18,7 @@ class MainChar {
         this.width = 80;
 
         this.velocity = { x: 0, y: 0 };
-        this.fallAcc = -200;
+        this.fallAcc = 200;
         this.speed = 200;
         this.updateBB();
         this.win = false;
@@ -143,7 +143,7 @@ class MainChar {
         
         const STOP_FALL = 10; 
         const STOP_FALL_A = 1;
-        const MAX_FALL = -210;
+        const MAX_FALL = 210;
 
         const PUSH_BACK = .31;
 
@@ -216,11 +216,11 @@ class MainChar {
 
             ///Jumping physics<
             
-            if (this.state !== 3 && this.velocity.y < 0) { // Not already jumping
+            if (this.state !== 3 && this.velocity.y > 0) { // Not already jumping
                 if (this.game.jump) {
                     // Check if conditions for initiating a jump are met
                     this.velocity.y = -220; // Adjust jump velocity
-                    this.fallAcc === STOP_FALL;
+                    //this.fallAcc === STOP_FALL;
                     this.state = 3; // Set character state to jumping
                     if(this.velocity.x > 0){
                         this.facing = 0;
@@ -256,18 +256,21 @@ class MainChar {
             //}
                   
                //}
-    }
+        }
     this.velocity.y += this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
     // max speed calculation
     // -210 >= -210 this.velocity.y = 210 // go up
     // -210 <= -210 this.velocity.y = -210 // go down
-    if (this.velocity.y >= MAX_FALL) this.velocity.y = -MAX_FALL;
-    if (this.velocity.y <= MAX_FALL) this.velocity.y = MAX_FALL;   
+    if (this.velocity.y >= MAX_FALL) this.velocity.y = MAX_FALL;
+    if (this.velocity.y <= -MAX_FALL) this.velocity.y = -MAX_FALL;   
     
     if (this.velocity.x >= MAX_RUN) this.velocity.x = MAX_RUN;
     if (this.velocity.x <= -MAX_RUN) this.velocity.x = -MAX_RUN;
     if (this.velocity.x >= MAX_WALK && !this.game.run) this.velocity.x = MAX_WALK;
     if (this.velocity.x <= -MAX_WALK && !this.game.run) this.velocity.x = -MAX_WALK;
+    console.log("Fall Acceleration:", this.fallAcc);
+    console.log("Y Velocity:", this.velocity.y);
+
 
 
 
