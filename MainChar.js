@@ -18,7 +18,7 @@ class MainChar {
         this.width = 80*.5;
 
         this.velocity = { x: 0, y: 0 };
-        this.fallAcc =400;
+        this.fallAcc = 400;
         this.speed = 200;
         this.updateBB();
         this.win = false;
@@ -131,7 +131,7 @@ class MainChar {
         const MIN_WALK = 5.453125*2;
         const MAX_WALK = 13.75*2;
 
-        const MAX_RUN = 50.75*2;
+        const MAX_RUN = 50.75*3;
         
         const ACC_WALK = 50.59375;
         const ACC_RUN = 100.390625;
