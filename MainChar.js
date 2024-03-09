@@ -14,11 +14,11 @@ class MainChar {
         this.facing = 0; // 0 = right, 1 = left
         this.state = 0; // 0 = idle, 1 = walking, 2 = running, 3 = jumping, 4 = falling, 5 = attacking, 6 = healing
         this.dead = false;
-        this.height = 80;
-        this.width = 80;
+        this.height = 80*.5;
+        this.width = 80*.5;
 
         this.velocity = { x: 0, y: 0 };
-        this.fallAcc = 200;
+        this.fallAcc =400;
         this.speed = 200;
         this.updateBB();
         this.win = false;
@@ -66,10 +66,10 @@ class MainChar {
         this.animator[2][1] = new Animator(this.spritesheet, 1024, 320, -80, 80, 6, .1, true, true);
 
         // jumping to the right 
-        this.animator[3][0] = new Animator(this.spritesheet, 1120, 716, 80, 80, 5, 1, true, false);
+        this.animator[3][0] = new Animator(this.spritesheet, 1105, 716, 80, 80, 5, 1, true, false);
         
         // jumping to the left 
-        this.animator[3][1] = new Animator(this.spritesheet, 1120, 716, -80, 80, 5, 1, true, true);
+        this.animator[3][1] = new Animator(this.spritesheet, 1105, 716, -80, 80, 5, 1, true, true);
 
         // falling to the right 
         this.animator[4][0] = new Animator(this.spritesheet, 1745, 716, 80, 80, 3, .1, true, false);
@@ -128,21 +128,16 @@ class MainChar {
     update() { // must fix
         var TICK = this.game.clockTick;
         console.log("Clock tick:", TICK);
-        const MIN_WALK = 5.453125*10;
-        const MAX_WALK = 13.75*10;
+        const MIN_WALK = 5.453125*2;
+        const MAX_WALK = 13.75*2;
 
-        const MAX_RUN = 50.75*10;
+        const MAX_RUN = 50.75*2;
         
-        const ACC_WALK = 50.59375*10;
-        const ACC_RUN = 100.390625*10;
+        const ACC_WALK = 50.59375;
+        const ACC_RUN = 100.390625;
         
-        const DEC_REL = 182.8125*10;
-        const DEC_SKID = 365.625*10;
-
-        const MIN_SKID = 33.75*10;
-        
-        const STOP_FALL = 10; 
-        const STOP_FALL_A = 1;
+        const DEC_REL = 182.8125;
+        const DEC_SKID = 365.625;
         const MAX_FALL = 210;
 
         const PUSH_BACK = .31;
@@ -216,7 +211,7 @@ class MainChar {
 
             ///Jumping physics<
             
-            if (this.state !== 3 && this.velocity.y < 19 ) { // Not already jumping
+            if (this.state !== 3 && this.velocity.y < 210 ) { // Not already jumping
                 if (this.game.jump) {
                     // Check if conditions for initiating a jump are met
                     this.velocity.y = -220; // Adjust jump velocity
@@ -229,7 +224,6 @@ class MainChar {
                         this.facing = 1;
                     }
                     this.velocity.y += this.fallAcc * TICK; // Apply gravity in the opposite direction to simulate falling back down
-
                 }
             }
             //else {
@@ -316,7 +310,7 @@ class MainChar {
         if (entity != that && entity.BB && that.BB.collide(entity.BB))  {
             if (that.velocity.y > 0) { // falling
                 if ((entity instanceof borders) && (that.lastBB.bottom <= entity.BB.top)) { // was above last tick
-                        that.y = entity.BB.top - 80;
+                        that.y = entity.BB.top - 80*.5;
                         that.velocity.y = 0;
                         if(that.state === 3)that.state = 0;
                     that.updateBB();
@@ -343,7 +337,7 @@ class MainChar {
             }
             if(that.facing === 0){
                     if ((entity instanceof borders) && (that.lastBB.right <= entity.BB.left)) { 
-                        that.x = entity.BB.left - 85;
+                        that.x = entity.BB.left - 85*.5;
                         that.updateBB();
                     }
                     else if ((entity instanceof borders) && (that.lastBB.left >= entity.BB.right)) {
@@ -360,7 +354,7 @@ class MainChar {
             }
             if(that.facing === 1){
                     if ((entity instanceof borders) && (that.lastBB.left >= entity.BB.right)) { 
-                        that.x = entity.BB.right + 85;
+                        that.x = entity.BB.right + 85*.5;
                         that.velocity.x = 0;
                         that.updateBB();
 
@@ -416,19 +410,12 @@ class MainChar {
 
     draw(ctx) {
         if(!this.dead){
-        // this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x, this.y, .3);
-
-        this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x, this.y-this.game.camera.y, 1);
-       // this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x - this.game.camerax,this.y, PARAMS.SCALE);
-        }
+        this.animator[this.state][this.facing].drawFrame(this.game.clockTick, ctx, this.x-this.game.camera.x, this.y-this.game.camera.y, .5);        }
 
 
 
     }
 
-// does an animation
-// doesnt repeat.
-    ///
 
 }
 
