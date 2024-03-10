@@ -7,6 +7,8 @@ ASSET_MANAGER.queueDownload("./maps/map1.png");
 ASSET_MANAGER.queueDownload("./assets/dragon.png");
 ASSET_MANAGER.queueDownload("./assets/catfighter.png");
 ASSET_MANAGER.queueDownload("./winScreen.webp")
+ASSET_MANAGER.queueDownload("./loseScreen.png")
+
 
 //music
 ASSET_MANAGER.queueDownload("./music/Enter Hallownest.mp3")

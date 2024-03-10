@@ -60,8 +60,8 @@ class SceneManager {
         }
         if(this.MainChar.lose == true){
             this.clearEntities();
-            this.winScreen = new winScreen(this.game);
-            this.game.addEntity(this.winScreen)
+            this.loseScreen = new loseScreen(this.game);
+            this.game.addEntity(this.loseScreen);
         }
 
         
