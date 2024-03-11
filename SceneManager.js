@@ -268,7 +268,7 @@ class MiniMap {
 
     draw(ctx) {
         ctx.strokeStyle = "Black";
-        ctx.strokeRect(this.x, this.y, this.w, PARAMS.BLOCKWWIDTH);
+        //ctx.strokeRect(this.x, this.y, this.w, PARAMS.BLOCKWWIDTH);
         for(var i = 0; i < this.game.entities.length; i++) {
             this.game.entities[i].drawMinimap(ctx, this.x, this.y);
         }

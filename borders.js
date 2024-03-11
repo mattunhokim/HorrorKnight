@@ -8,7 +8,7 @@ class borders {
     }
     draw(ctx) {
             ctx.strokeStyle = 'Red';
-            ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
+            //ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
 
     }
 }
@@ -22,7 +22,7 @@ class goal {
     }
     draw(ctx) {
             ctx.strokeStyle = 'Green';
-            ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
+            //ctx.strokeRect(this.BB.x-this.game.camera.x, this.BB.y-this.game.camera.y, this.BB.width, this.BB.height);
 
     }
 }
@@ -37,7 +37,7 @@ class spikes {
     }
     draw(ctx) {
         ctx.strokeStyle = 'Blue';
-        ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
+        //ctx.strokeRect(this.BB.x - this.game.camera.x, this.BB.y - this.game.camera.y, this.BB.width, this.BB.height);
 
     }
 }
